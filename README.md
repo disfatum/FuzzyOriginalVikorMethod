@@ -1,1 +1,1 @@
-# FuzzyOriginalVikorMethod
+# Fuzzy and original Vikor Method
