@@ -2,6 +2,7 @@ package org.vikor.Views;
 
 import java.io.IOException;
 
+import org.vikor.Controllers.HomeWindowController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +23,7 @@ public class AddFA extends Application{
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		 
          // Specifies the owner Window (parent) for new window
-		primaryStage.initOwner(MainWindow.getPrimaryStage());
+		primaryStage.initOwner(HomeWindowController.getPrimaryStage());
 		primaryStage.initStyle(StageStyle.UTILITY);
 		primaryStage.setScene(new Scene(root, 204, 80));
 		primaryStage.show();
@@ -32,7 +33,7 @@ public class AddFA extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-	public static Stage getPrimaryStage() {
+	public Stage getPrimaryStage() {
 		return primaryStage1;
 		
 	}

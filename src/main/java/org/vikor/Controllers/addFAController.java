@@ -5,10 +5,12 @@ import java.util.ResourceBundle;
 
 import org.vikor.Views.AddFA;
 
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class addFAController {
 
@@ -23,21 +25,12 @@ public class addFAController {
 
     @FXML
     private Button AddfButton;
+    
+    public static Stage stage = new Stage();
 
     @FXML
     void initialize() {
-    	AddAltButton.addEventHandler(MouseEvent.ANY, event -> {
-       	 
-      	    if (event.getClickCount() == 1 && event.getButton().equals(MouseButton.SECONDARY)) {
-      	        if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-      	        	try {
-						MainWindowController.f.stop();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-      	        }
-      	    }
-      	});
+    
+    	
     }
 }
