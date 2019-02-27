@@ -1,1 +1,2 @@
-# Fuzzy and original Vikor Method
+# Fuzzy & Original VIKOR methods
+fuzzy and original vikor methods

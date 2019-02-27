@@ -2,8 +2,7 @@ package org.vikor.Views;
 
 import java.io.IOException;
 
-import org.vikor.Controllers.HomeWindowController;
-
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,21 +10,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import javafx.application.Application;
-
-
-public class AddFA extends Application{
+public class Calculate extends Application{
 	static Stage primaryStage1;
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/AddFA.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/Calculate.fxml"));
 		primaryStage.setTitle("");
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		 
          // Specifies the owner Window (parent) for new window
-		primaryStage.initOwner(HomeWindowController.getPrimaryStage());
+		primaryStage.initOwner(Vikor.getPrimaryStage());
 		primaryStage.initStyle(StageStyle.UTILITY);
-		primaryStage.setScene(new Scene(root, 204, 80));
+		primaryStage.setScene(new Scene(root, 800, 600));
 		primaryStage.show();
 		primaryStage1 = primaryStage;
 	}
@@ -33,7 +29,7 @@ public class AddFA extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-	public Stage getPrimaryStage() {
+	public static Stage getPrimaryStage() {
 		return primaryStage1;
 		
 	}
