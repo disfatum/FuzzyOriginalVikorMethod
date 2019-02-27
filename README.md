@@ -1,2 +1,2 @@
-# Fuzzy and original Vikor Method
+# Fuzzy and Original Vikor Method
 Fuzzy method uses triangular numbers
