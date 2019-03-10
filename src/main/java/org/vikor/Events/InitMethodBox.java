@@ -9,8 +9,8 @@ public class InitMethodBox {
 	public void init(ComboBox<String> ClassicFuzzyBox){
 		
 		ObservableList<String> l = FXCollections.observableArrayList();
-		l.add("Classic VIKOR");
-		l.add("Fuzzy VIKOR");
+		
+		l.add("Classic VIKOR");l.add("Fuzzy VIKOR");
 		ClassicFuzzyBox.setItems(l);
 		ClassicFuzzyBox.setValue(l.get(0));
 		

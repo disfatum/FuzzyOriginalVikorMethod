@@ -2,42 +2,46 @@ package org.vikor.DataStructure;
 
 public class TriangularFuzzyNumber {
 
-	private Double left;
-	private Double center;
-	private Double right;
+	private String left;
+	private String center;
+	private String right;
+	public String Name;
 	
 	public TriangularFuzzyNumber(Double left,Double center,Double right) {
-		this.left = left;
-		this.center = center;
-		this.right = right;
+		this.left = String.valueOf(left);
+		this.center = String.valueOf(center);;
+		this.right = String.valueOf(right);;
+	}
+	public TriangularFuzzyNumber(String s) {
+		this.Name = s;
 	}
 
 	public Double getLeft() {
-		return left;
+		return Double.valueOf(left);
 	}
 
 	public void setLeft(Double left) {
-		this.left = left;
+		this.left = String.valueOf(left);
 	}
 
 	public Double getCenter() {
-		return center;
+		return Double.valueOf(center);
 	}
 
 	public void setCenter(Double center) {
-		this.center = center;
+		this.center = String.valueOf(center);
 	}
 
 	public Double getRight() {
-		return right;
+		return Double.valueOf(right);
 	}
 
 	public void setRight(Double right) {
-		this.right = right;
+		this.right = String.valueOf(right);
 	}
 	public Double DefazzyCentriod() {
 	
-		Double def = (this.left + this.center+this.right)/3;
+		Double def = (Double.valueOf(this.left) + Double.valueOf(this.center)+Double.valueOf(this.right))/3;
 		return def;
 	}
 	public String DataforTable() {
@@ -47,11 +51,11 @@ public class TriangularFuzzyNumber {
 	}
 	
 	public void RefreshData(String data) {
-		 String[] l = new String[data.length()];
+		 String[] l = new String[3];
 	    	l = data.split(",");
-	    	this.left = Double.valueOf(l[0]);
-	    	this.center = Double.valueOf(l[1]);
-	    	this.right = Double.valueOf(l[2]);
+	    	this.left = l[0];
+	    	this.center = l[1];
+	    	this.right = l[2];
 	}
 	
 }

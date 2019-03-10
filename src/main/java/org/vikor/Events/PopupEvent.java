@@ -42,10 +42,25 @@ public class PopupEvent {
     	b2.setPrefSize(350, 50);
     	
     	b2.setOnAction(e->{
-    		OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","","");
-    		TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(0.0,1.0,0.0);
-    		VikorController.FTableData.add(l1);
-    		VikorController.FuzzyFTableData.add(tfn);
+			if(VikorController.Settings.getSynchronization().equals("Да")) {
+    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
+        		OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+        		VikorController.FTableData.add(l1);
+        		VikorController.FuzzyFTableData.add(l2);
+        		VikorController.OriginalFTableData.add(l1);
+			}
+			if(VikorController.Settings.getSynchronization().equals("Нет")) {
+				if(VikorController.f == false) {
+					OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
+					VikorController.OriginalFTableData.add(l1);
+					VikorController.FTableData.add(l1);
+				}
+				if(VikorController.f == true) {
+					OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+					VikorController.FuzzyFTableData.add(l2);
+					VikorController.FTableData.add(l2);
+				}
+			}
     		p.AddCol(b1.getText(), PTableData, Ptable);
     		
     	});
@@ -89,9 +104,23 @@ public class PopupEvent {
     	b2.setOnAction(e->{
     		
     			int ind = Ftable.getSelectionModel().getSelectedIndex();
-    			FTableData.remove(ind);
-    			VikorController.FuzzyFTableData.remove(ind);
     			Ptable.getColumns().remove(ind+1);
+    			
+    			if(VikorController.Settings.getSynchronization().equals("Да")) {
+            		VikorController.FTableData.remove(ind);
+            		VikorController.FuzzyFTableData.remove(ind);
+            		VikorController.OriginalFTableData.remove(ind);
+    			}
+    			if(VikorController.Settings.getSynchronization().equals("Нет")) {
+    				if(VikorController.f == false) {
+    					VikorController.OriginalFTableData.remove(ind);
+    					VikorController.FTableData.remove(ind);
+    				}
+    				if(VikorController.f == true) {
+    					VikorController.FuzzyFTableData.remove(ind);
+    					VikorController.FTableData.remove(ind);
+    				}
+    			}
     			//Ptable.refresh();
     			
     	});
@@ -161,8 +190,26 @@ public class PopupEvent {
     	b2.setOnMouseClicked(e->{
     		if(e.getClickCount() == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
     			PtableEvents.AddCol(b1.getText(), PTableData, Ptable);
-    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","","");
-        		VikorController.FTableData.add(l1);
+    			VikorController.Colnames.add(b1.getText());
+    			if(VikorController.Settings.getSynchronization().equals("Да")) {
+	    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
+	        		OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+	        		VikorController.FTableData.add(l1);
+	        		VikorController.FuzzyFTableData.add(l2);
+	        		VikorController.OriginalFTableData.add(l1);
+    			}
+    			if(VikorController.Settings.getSynchronization().equals("Нет")) {
+    				if(VikorController.f == false) {
+    					OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
+    					VikorController.OriginalFTableData.add(l1);
+    					VikorController.FTableData.add(l1);
+    				}
+    				if(VikorController.f == true) {
+    					OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+    					VikorController.FuzzyFTableData.add(l2);
+    					VikorController.FTableData.add(l2);
+    				}
+    			}
     		}
     	});
     	VBox vb = new VBox(l,b1,b2);
@@ -187,19 +234,69 @@ public class PopupEvent {
     	
     	b2.setOnMouseClicked(e->{
     		if(e.getClickCount() == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
+    			
     			ObservableList<String > list =  FXCollections.observableArrayList();
+    			ObservableList<String > originallist =  FXCollections.observableArrayList();
+    			ObservableList<TriangularFuzzyNumber > fuzzylist =  FXCollections.observableArrayList();
+    			
     			list.add(b1.getText());
-    			for(int i = 1; i < ptable.getColumns().size();i++) {
-    				String val =  "1";
-    				list.add(val);
-    			} 
-    			OriginalPtableData pd = new OriginalPtableData(list);
-    			pTableData.add(pd);
+    			TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(0.9,1.0,1.1);
+	    			for(int i = 1; i < ptable.getColumns().size();i++) {
+	    				
+	    					String val =  "1";
+		    				list.add(val);
+		    				originallist.add(val);
+		    				fuzzylist.add(tfn);
+	    			}
+	    			System.out.println(VikorController.f );
+    			if(VikorController.Settings.getSynchronization().equals("Да")) {
+    				if(VikorController.f == false) {
+    					OriginalPtableData pd = new OriginalPtableData(list);
+    					pTableData.add(pd);
+    					VikorController.OriginalPTableData.add(originallist);
+    					VikorController.FuzzyPTableData.add(fuzzylist);	
+    				}
+    				if(VikorController.f == true) {
+    					ObservableList<String > flist =  FXCollections.observableArrayList();
+    					flist.add(list.get(0));
+    					for(int i = 0; i < fuzzylist.size();i++) {
+    						flist.add(fuzzylist.get(i).DataforTable());
+    					}
+    					OriginalPtableData pd = new OriginalPtableData(flist);
+    					pTableData.add(pd);
+    					VikorController.OriginalPTableData.add(originallist);
+    					VikorController.FuzzyPTableData.add(fuzzylist);	
+    				}
+    		
+    			}
+    			if(VikorController.Settings.getSynchronization().equals("Нет")) {
+    				if(VikorController.f == false) {
+    					OriginalPtableData pd = new OriginalPtableData(list);
+    					pTableData.add(pd);
+    					VikorController.OriginalPTableData.add(list);
+    				}
+    				if(VikorController.f == true) {
+    					ObservableList<TriangularFuzzyNumber> flist =  FXCollections.observableArrayList();
+    					ObservableList<String > list1 =  FXCollections.observableArrayList();
+    					TriangularFuzzyNumber tfn1 = new TriangularFuzzyNumber(list.get(0));
+    					flist.add(tfn1);
+    					list1.add(list.get(0));
+    					for(int i = 0; i < fuzzylist.size();i++) {
+    						flist.add(fuzzylist.get(i));
+    						list1.add(fuzzylist.get(i).DataforTable());
+    					}
+    					OriginalPtableData pd = new OriginalPtableData(list1);
+    					VikorController.FuzzyPTableData.add(flist);
+    					pTableData.add(pd);
+    				}
+    				
+    			}
+    			ptable.setItems(pTableData);
+    			ptable.refresh();
     		}
     	//System.out.println(pTableData.get(c).toString()+" ptd");c++;
-    	ptable.setItems(null);
-    	ptable.setItems(pTableData);
-    	ptable.refresh();
+    	//ptable.setItems(null);
+    	
     	});
     	VBox vb = new VBox(l,b1,b2);
     	vb.alignmentProperty().set(Pos.CENTER);
@@ -235,9 +332,22 @@ public class PopupEvent {
 		deletealt.setOnMouseClicked(e->{
 			if(e.getClickCount() == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
 				int ind = Ptable.getSelectionModel().getSelectedIndex();
-				PTableData.remove(ind);
-				Ptable.refresh();
+				if(VikorController.Settings.getSynchronization().equals("Да")) {
+            		VikorController.FuzzyFTableData.remove(ind);
+            		VikorController.OriginalFTableData.remove(ind);
+    			}
+    			if(VikorController.Settings.getSynchronization().equals("Нет")) {
+    				if(VikorController.f == false) {
+    					VikorController.OriginalPTableData.remove(ind);
+    					VikorController.PTableData.remove(ind);
+    				}
+    				if(VikorController.f == true) {
+    					VikorController.FuzzyPTableData.remove(ind);
+    					VikorController.PTableData.remove(ind);
+    				}
+    			}
 			}
+			Ptable.refresh();
 		});
 		
 		props.setOnMouseClicked(e->{
@@ -245,6 +355,11 @@ public class PopupEvent {
     			Ptableprop f = new Ptableprop();
     			Stage primaryStage = new Stage();
     			try {
+    				VikorController.pindexPropCol = Ptable.getSelectionModel().getSelectedIndex();
+    				VikorController.Colnames.clear();
+    				for(int i = 0; i < Ptable.getColumns().size();i++) {
+    	   				VikorController.Colnames.add(Ptable.getColumns().get(i).getText());
+    	   			}
     					f.start(primaryStage);
     				} catch (IOException e1) {
     					e1.printStackTrace();

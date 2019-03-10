@@ -2,16 +2,6 @@ package org.vikor.Methods;
 
 import java.awt.List;
 
-import com.fuzzylite.*;
-import com.fuzzylite.activation.General;
-import com.fuzzylite.defuzzifier.Centroid;
-import com.fuzzylite.norm.s.Maximum;
-import com.fuzzylite.norm.t.AlgebraicProduct;
-import com.fuzzylite.rule.Rule;
-import com.fuzzylite.rule.RuleBlock;
-import com.fuzzylite.term.Ramp;
-import com.fuzzylite.variable.InputVariable;
-import com.fuzzylite.variable.OutputVariable;
 
 public class Example {
 
