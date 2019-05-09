@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.vikor.Controllers.QvController">
    <children>
       <BorderPane layoutX="7.0" layoutY="61.0" prefHeight="500.0" prefWidth="796.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -43,10 +43,10 @@
             </SplitPane>
          </center>
          <bottom>
-            <AnchorPane prefHeight="50.0" prefWidth="796.0" style="-fx-background-color: #2e3348;" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="50.0" prefWidth="796.0" style="-fx-background-color: #4682B4;" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
-            <AnchorPane prefHeight="50.0" prefWidth="796.0" style="-fx-background-color: #2e3348;" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="50.0" prefWidth="796.0" style="-fx-background-color: #4682B4 #4682B4;" BorderPane.alignment="CENTER" />
          </top></BorderPane>
    </children>
 </AnchorPane>

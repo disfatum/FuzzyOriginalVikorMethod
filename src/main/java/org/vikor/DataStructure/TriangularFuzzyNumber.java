@@ -52,6 +52,7 @@ public class TriangularFuzzyNumber {
 	
 	public void RefreshData(String data) {
 		 String[] l = new String[3];
+		// System.out.println(data+"sasa");
 	    	l = data.split(",");
 	    	this.left = l[0];
 	    	this.center = l[1];

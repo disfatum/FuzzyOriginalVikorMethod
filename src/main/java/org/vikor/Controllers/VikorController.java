@@ -17,17 +17,23 @@ import org.vikor.Events.PopupEvent;
 import org.vikor.Events.PtableEvent;
 import org.vikor.Methods.ClassicVikor;
 import org.vikor.Views.Calculate;
+import org.vikor.Views.Domination;
+import org.vikor.Views.QvView;
+import org.vikor.Views.SRwView;
+import org.vikor.Views.Settingsview;
+import org.vikor.Views.ValuePathView;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.stage.Stage;
@@ -89,6 +95,8 @@ public class VikorController {
     @FXML
     private ComboBox<String> ClassicFuzzyBox;
     
+    @FXML
+    private BorderPane bp;
     
     public static int indexPropCol;
     PopupEvent PopupEvents = new PopupEvent();
@@ -111,26 +119,31 @@ public class VikorController {
    	boolean bx = true;
    	public static boolean f = false;
    	
-   	public static Settings Settings = new Settings("Нет");
+   	public static Settings Settings = new Settings("Да",0.5,10,10,0.01,0.01);
    	
    	@FXML
     void initialize() {
-   		
    		InitMethodBox init = new InitMethodBox();
    		init.init(ClassicFuzzyBox);
    		firstenter();
    		
    	ClassicFuzzyBox.addEventHandler(Event.ANY, e->{
    			
-   		  if(Settings.getSynchronization().equals("Да")) {
+   		  if(Settings.getSynchronization().equals("Да")  ) {
    			  Colnames.clear();
    			if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
    					
 	   				System.out.println("FUZZY version initialize");
 	   				f = true;
+	   				
 	   				for(int i = 0; i < PTableData.size();i++) {
-	   					for(int j = 0 ; j < FuzzyPTableData.get(0).size();j++) {
-	   						PTableData.get(i).setinlist(j+1,FuzzyPTableData.get(i).get(j).DataforTable());
+	   					for(int j = 0 ; j < PTableData.get(0).size()-1;j++) {
+	   						
+	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(
+	   								Double.valueOf(PTableData.get(i).get(j+1))*0.9,
+	   								Double.valueOf(PTableData.get(i).get(j+1)),
+	   								Double.valueOf(PTableData.get(i).get(j+1))*1.1);
+	   						PTableData.get(i).setinlist(j+1,tfn.DataforTable());
 	   					
 	   					}
 	   				}
@@ -147,10 +160,13 @@ public class VikorController {
    				}
 	   			if(ClassicFuzzyBox.getValue().equals("Classic VIKOR") && bx == true) {
 	   				f = false;
-	   				System.out.println("Сlassic version initialize");
+	   				System.out.println("Classic version initialize");
 	   				for(int i = 0; i < PTableData.size();i++) {
-	   					for(int j = 0 ; j < FuzzyPTableData.get(i).size();j++) {
-	   						PTableData.get(i).setinlist(j+1,OriginalPTableData.get(i).get(j));
+	   					for(int j = 0 ; j < PTableData.get(i).size()-1;j++) {
+	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(0.0,1.0,1.1);
+	   						//System.out.println(PTableData+"");
+	   						tfn.RefreshData(PTableData.get(i).get(j+1));
+	   						PTableData.get(i).setinlist(j+1,tfn.getCenter().toString());
 	   					}
 	   				}
 	   				for(int i = 0; i < FTableData.size();i++) {
@@ -207,7 +223,7 @@ public class VikorController {
    				PTableData.clear();
    				Ptable.getColumns().clear();
    				AltNameCol();
-   				System.out.println("Сlassic version initialize");
+   				System.out.println("Classic version initialize");
    				for(int i = 0; i < OriginalPTableData.size();i++) {
    						OriginalPtableData pd = new OriginalPtableData(OriginalPTableData.get(i));
    						PTableData.add(pd);
@@ -228,12 +244,16 @@ public class VikorController {
    			}
    		}
    	});
+   	
+   	Event event = new Event(Event.ANY);
+    ClassicFuzzyBox.fireEvent(event);
+    
    		CalculateButton.setOnAction(e->{
         	Calculate f = new Calculate();
 			Stage primaryStage = new Stage();
 			try {	
 					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, 0.5, Settings, OriginalPTableData);
+					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
 					f.start(primaryStage);
 				
 				} catch (IOException e1) {
@@ -241,9 +261,70 @@ public class VikorController {
 				}
 		
         });
+   		
+   		SettingsButton.setOnAction(e->{
+   			Settingsview f = new Settingsview();
+			Stage primaryStage = new Stage();
+			try {	
+					f.start(primaryStage);
+				
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+   		});
+   		
+   		QvButton.setOnAction(e->{
+   			QvView f = new QvView();
+			Stage primaryStage = new Stage();
+			try {	
+					t = new ClassicVikor();
+					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					f.start(primaryStage);
+				
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+   		});
+   		
+   		SRwButton.setOnAction(e->{
+   			SRwView f = new SRwView();
+			Stage primaryStage = new Stage();
+			try {	
+					t = new ClassicVikor();
+					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					f.start(primaryStage);
+				
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+   		});
+   		VPButton.setOnAction(e->{
+   			ValuePathView f = new ValuePathView();
+			Stage primaryStage = new Stage();
+			try {	
+					t = new ClassicVikor();
+					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					f.start(primaryStage);
+				
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+   		});
+   		DominationButton.setOnAction(e->{
+   			Domination f = new Domination();
+			Stage primaryStage = new Stage();
+			try {	
+					t = new ClassicVikor();
+					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					f.start(primaryStage);
+				
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+   		});
     }
    	/*
-   	 * добавление первой колонки с именами альтернатив
+   	 * 
    	 */
    	public void AltNameCol() {
    		TableColumn<OriginalPtableData,String> AltNameCol = new TableColumn<OriginalPtableData,String>("Альтернатива/Критерий");
@@ -270,7 +351,7 @@ public class VikorController {
    	}
    	
    	/*
-   	 * инициализация при запуске
+   	 * 
    	 */
    	public void firstenter() {
    		Ftable.isEditable();
@@ -315,7 +396,6 @@ public class VikorController {
         PtablepropController.jb.setOnAction(e->{
         	Ptable.refresh();
         });
-        
         
    	}
 }

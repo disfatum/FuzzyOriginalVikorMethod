@@ -3,6 +3,8 @@ package org.vikor.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.vikor.DataStructure.TriangularFuzzyNumber;
+
 import com.jfoenix.controls.JFXButton;
 
 import javafx.collections.FXCollections;
@@ -11,6 +13,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -34,29 +39,47 @@ public class PtablepropController {
     private SplitPane splt;
     
     @FXML
+    private NumberAxis xAxis;
+    
+    @FXML
     private LineChart<Number, Number> linechart;
 
     public static JFXButton jb = new JFXButton();
     ObservableList<TextField> TfList =  FXCollections.observableArrayList();
+    ObservableList<Button> but =  FXCollections.observableArrayList();
     @FXML
     void initialize() {
     	Label l = new Label("Альтернатива "+VikorController.PTableData.get(VikorController.pindexPropCol).getFromList(0));
     	Vbox.getChildren().add(l);
      
     		 for(int j = 0; j < VikorController.PTableData.get(VikorController.pindexPropCol).size();j++) {
-    			 addHbox(Vbox);
+    			 addHbox(Vbox, j);
     		 }
     	 
       footerHbox(Vbox);
+      
+      for(int i = 0; i < but.size();i++) {
+    	  int final_i = i;
+      but.get(i).setOnAction(e->{
+  		linechart.getData().clear();
+  		Series<Number, Number> series1 = new Series<>();
+  		TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(1.0,1.0,1.0);
+  		tfn.RefreshData(TfList.get(final_i+1).getText());
+	        		series1.getData().add(new Data<Number, Number>(tfn.getLeft(),0.0));
+	        		series1.getData().add(new Data<Number, Number>(tfn.getCenter(),1.0));
+	        		series1.getData().add(new Data<Number, Number>(tfn.getRight(),0.0));
+	        	series1.setName(VikorController.Colnames.get(final_i+1));
+	        	
+	        	
+	        	linechart.getData().add(series1);
+	        	xAxis.setLowerBound(tfn.getLeft());
+	        	xAxis.setUpperBound(tfn.getRight());
+  		});
+      }
     }
     int c = 0;
-    public void addHbox(VBox vb) {
-    	if(VikorController.f == false) {
-    		splt.setDividerPositions(0.99);
-    	}
-    	else {
-    		splt.setDividerPositions(0.5);
-    	}
+    public void addHbox(VBox vb, int j) {
+    	
     	Label l = new Label();
     	l.setText(VikorController.Colnames.get(c));
     	TextField tx = new TextField();
@@ -66,7 +89,22 @@ public class PtablepropController {
     	tx.setText(VikorController.PTableData.get(VikorController.pindexPropCol).getFromList(TfList.size()-1));
     	l.setPrefSize(350, 50);
     	tx.setPrefSize(350, 50);
-    	HBox hb = new HBox(l,tx);
+    	HBox hb;
+    	
+    	if(VikorController.f == false) {
+    		splt.setDividerPositions(0.99);
+    		hb = new HBox(l,tx);
+    	}
+    	else {
+    		
+    		splt.setDividerPositions(0.5);
+    		hb = new HBox(l,tx);
+    		if(c > 0) {
+    			Button fb = new Button("Показать на графике");
+        		but.add(fb);
+        		hb = new HBox(l,tx,fb);
+        	}
+    	}
     	hb.setSpacing(10);
     	hb.setPadding(new Insets(15,20, 10,10));
     	hb.setAlignment(Pos.CENTER);

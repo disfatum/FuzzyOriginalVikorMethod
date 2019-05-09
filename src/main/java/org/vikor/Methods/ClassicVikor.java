@@ -3,6 +3,7 @@ package org.vikor.Methods;
 import java.util.Collections;
 import java.util.List;
 
+import org.vikor.Controllers.VikorController;
 import org.vikor.DataStructure.OriginalCriterionDataStructure;
 import org.vikor.DataStructure.OriginalPtableData;
 import org.vikor.DataStructure.Settings;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 
 public class ClassicVikor {
 	
+	public ObservableList<Double> Qv = FXCollections.observableArrayList();
 	public ObservableList<Double> Q = FXCollections.observableArrayList();
 	public ObservableList<Double> S = FXCollections.observableArrayList();
 	public ObservableList<Double> R = FXCollections.observableArrayList();
@@ -34,9 +36,8 @@ public class ClassicVikor {
 			ObservableList<OriginalPtableData> PTableData,
 			ObservableList<OriginalCriterionDataStructure> FTableData,
 			Double V,
-			Settings Settings,
-			ObservableList<ObservableList<String>> OriginalPTableData) {
-		
+			Settings Settings) {
+		d.clear();
 		AltNames.clear();
 		CritNames.clear();
 		Q.clear();
@@ -61,13 +62,13 @@ public class ClassicVikor {
 		Critsize = PTableData.size();
 		
 		/*
-		 * ��� 1; ������ � ������ �������� �������� ��� ��� ��� ����
+		 * шаг 1; 
 		 */
 				
 				ObservableList<String> MxMn = FXCollections.observableArrayList();
 				ObservableList<Double> S = FXCollections.observableArrayList();
 				ObservableList<Double> R = FXCollections.observableArrayList();
-				ObservableList<Double> R_buf;
+				
 				
 				ObservableList<Double> Q = FXCollections.observableArrayList();
 				
@@ -78,32 +79,35 @@ public class ClassicVikor {
 				
 				//for(int i  = 0; i < Asize; i++) {Collections.sort(Sdata.get(i));}
 				
-				double stars = 0, starm = 0;
+				
 				ObservableList<List<Double>> Sdata = FXCollections.observableArrayList();
+				System.out.println(PTableData.toString()+"asd");
 				
 				
-				
-				for(int j = 1; j < OriginalPTableData.get(0).size();j++) {
+				for(int j = 0; j < d.get(0).size();j++) {
 					List<Double> bf = FXCollections.observableArrayList();
 					for(int i = 0; i < PTableData.size();i++) {
-						bf.add(Double.valueOf(OriginalPTableData.get(i).get(j)));
-				}
+						bf.add(Double.valueOf(d.get(i).get(j)));
+					}
 					Sdata.add(bf);
-			}
-				for(int i  = 0; i < PTableData.size(); i++) {
-					
+				}
+				
+				System.out.println(Sdata.toString()+" Sdata");
+				for(int i  = 0; i < Sdata.size(); i++) {
+					double stars = 0, starm = 0;
 					for(int j  = 0; j < Fsize; j++) {
-						if(MxMn.get(j) == "MAX") {
-							ObservableList<List<Double>> Sdata1 = FXCollections.observableArrayList();
-							Sdata1 = Sdata;
-							stars = Collections.max(Sdata1.get(i));
-							starm = Collections.min(Sdata1.get(i));
+						
+						if(MxMn.get(j).equals("Максимизация")) {
+							List<Double> sdata = FXCollections.observableArrayList();
+							sdata = Sdata.get(i);
+							stars = Collections.max(sdata);
+							starm = Collections.min(sdata);
 						}
-						if(MxMn.get(j) == "MIN") {
-							ObservableList<List<Double>> Sdata1 = FXCollections.observableArrayList();
-							Sdata1 = Sdata;
-							starm = Collections.max(Sdata1.get(i));
-							stars = Collections.min(Sdata1.get(i));
+						if(MxMn.get(j).equals("Минимизация")) {
+							List<Double> sdata = FXCollections.observableArrayList();
+							sdata = Sdata.get(i);
+							starm = Collections.max(sdata);
+							stars = Collections.min(sdata);
 							
 						}
 						
@@ -115,20 +119,16 @@ public class ClassicVikor {
 				System.out.println(minus.toString()+" minus");
 				
 		/*
-		 * ��� 2;��������� �������� Si � Ri
+		 * шаг 2;вычисление Si и Ri
 		 */
 				
 				for(int i  = 0; i < PTableData.size(); i++) {
 					double e = 0;
-					R_buf = FXCollections.observableArrayList();
+					ObservableList<Double> R_buf = FXCollections.observableArrayList();
 					for(int j  = 0; j < W.size(); j++) {
 						e = e +VikorS(W.get(j),i,j);
 						R_buf.add(VikorR(W.get(j), i,j));
-						System.out.println(e+" S\n");
-						System.out.println(R_buf.toString()+" R_buf\n");
 					}
-					//System.out.println(R_buf.toString()+" R_buf\n");
-					//Collections.sort(R_buf);
 					R.add(Collections.max(R_buf));
 					S.add(e);
 				}
@@ -140,7 +140,7 @@ public class ClassicVikor {
 				Double Sstar = Collections.min(S);
 			
 		/*
-		 * ��� 3;��������� �������� Qi
+		 * шаг 3; вычисление Qi
 		 */
 				for(int i  = 0; i < PTableData.size(); i++) {
 					Double q = (V * (S.get(i) - Sstar) / (Sminus - Sstar))+((1 - V) * (R.get(i) - Rstar)/(Rminus - Rstar));
@@ -155,10 +155,10 @@ public class ClassicVikor {
 				this.Rminus = Collections.max(R);
 				this.Rstar = Collections.min(R);
 				
-				//int o = Controller.f.getQvstep();
-				//double qvs = Controller.f.getQvs();
-				//double v = Controller.f.getV();
-				/*ObservableList<Double> v1 = FXCollections.observableArrayList();
+				int o = VikorController.Settings.getQvstep();
+				double qvs = VikorController.Settings.getQvs();
+				double v = VikorController.Settings.getV();
+				ObservableList<Double> v1 = FXCollections.observableArrayList();
 				for(int i = 0; i < o /2;i++) {
 					v1.add(v - (o/2 - i)*(qvs) );
 				}
@@ -171,7 +171,7 @@ public class ClassicVikor {
 				this.Qv = v1;
 				System.out.println(v1.toString()+"v1");
 				
-				/*/
+				
 			}
 			public ObservableList<Double> VikorV(double v) {
 				ObservableList<Double> qq = FXCollections.observableArrayList(); 
@@ -194,14 +194,14 @@ public class ClassicVikor {
 				System.out.println(wg.toString()+" size");
 					double S = 0;
 					for(int j  = 0; j < wg.size(); j++) {
-						S = S + wg.get(j)*((0 - Double.valueOf(d.get(c).get(j)))/(0 - 1));	
+						S = S + wg.get(j)*((star.get(j) - Double.valueOf(d.get(c).get(j)))/(star.get(j) - minus.get(j)));	
 					}
 				
 				return S;
 			}
 			public Double VikorR(double newValue,int c, int critnumber){
 					
-					double R = 0;
+					double R;
 					ObservableList<Double> R1 = FXCollections.observableArrayList();
 					ObservableList<Double> wg = FXCollections.observableArrayList();
 					wg = W;

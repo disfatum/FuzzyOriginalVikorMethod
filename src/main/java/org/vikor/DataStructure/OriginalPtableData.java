@@ -44,4 +44,8 @@ public class OriginalPtableData {
 	public int size() {
 		return this.list.size();
 	}
+	public String get(int j) {
+		// TODO Auto-generated method stub
+		return this.list.get(j);
+	}
 }
