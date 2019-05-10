@@ -16,6 +16,9 @@ import org.vikor.Events.InitMethodBox;
 import org.vikor.Events.PopupEvent;
 import org.vikor.Events.PtableEvent;
 import org.vikor.Methods.ClassicVikor;
+import org.vikor.Methods.FuzzyVikorCentroid;
+import org.vikor.Methods.FuzzyVikorMax;
+import org.vikor.Methods.FuzzyVikorMediana;
 import org.vikor.Views.Calculate;
 import org.vikor.Views.Domination;
 import org.vikor.Views.QvView;
@@ -103,6 +106,10 @@ public class VikorController {
     FtableEvent FtableEvents = new FtableEvent();
     PtableEvent PtableEvents = new PtableEvent();
     public static ClassicVikor t;
+    public static FuzzyVikorCentroid Cindex;
+    public static FuzzyVikorMediana Mediana;
+    public static FuzzyVikorMax LargeMax;
+    
    	public static ObservableList<OriginalCriterionDataStructure> FTableData = FXCollections.observableArrayList();
    	public static ObservableList<OriginalCriterionDataStructure> FuzzyFTableData = FXCollections.observableArrayList();
    	public static ObservableList<OriginalCriterionDataStructure> OriginalFTableData = FXCollections.observableArrayList();
@@ -119,7 +126,7 @@ public class VikorController {
    	boolean bx = true;
    	public static boolean f = false;
    	
-   	public static Settings Settings = new Settings("Да",0.5,10,10,0.01,0.01);
+   	public static Settings Settings = new Settings("Да","0.5",10,10,0.01,0.01);
    	
    	@FXML
     void initialize() {
@@ -249,17 +256,34 @@ public class VikorController {
     ClassicFuzzyBox.fireEvent(event);
     
    		CalculateButton.setOnAction(e->{
-        	Calculate f = new Calculate();
-			Stage primaryStage = new Stage();
-			try {	
-					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
-					f.start(primaryStage);
-				
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-		
+	   		if(ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
+	        	Calculate f = new Calculate();
+				Stage primaryStage = new Stage();
+				try {	
+						t = new ClassicVikor();
+						t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
+						f.start(primaryStage);
+					
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	   		}
+	   		if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR")) {
+	   			Cindex = new FuzzyVikorCentroid();
+	   			TriangularFuzzyNumber tfn1 = new TriangularFuzzyNumber(0.0,0.2,0.5);
+	   			tfn1.RefreshData(Settings.getV()+"");
+	   			Cindex.Calculate(PTableData, FTableData, tfn1, Settings);
+	   			
+	   			Mediana = new FuzzyVikorMediana();
+	   			TriangularFuzzyNumber tfn2 = new TriangularFuzzyNumber(0.0,0.2,0.5);
+	   			tfn2.RefreshData(Settings.getV()+"");
+	   			Mediana.Calculate(PTableData, FTableData, tfn2, Settings);
+	   			
+	   			LargeMax = new FuzzyVikorMax();
+	   			TriangularFuzzyNumber tfn3 = new TriangularFuzzyNumber(0.0,0.2,0.5);
+	   			tfn3.RefreshData(Settings.getV()+"");
+	   			LargeMax.Calculate(PTableData, FTableData, tfn3, Settings);
+	   		}
         });
    		
    		SettingsButton.setOnAction(e->{
@@ -278,7 +302,7 @@ public class VikorController {
 			Stage primaryStage = new Stage();
 			try {	
 					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
 					f.start(primaryStage);
 				
 				} catch (IOException e1) {
@@ -291,7 +315,7 @@ public class VikorController {
 			Stage primaryStage = new Stage();
 			try {	
 					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
 					f.start(primaryStage);
 				
 				} catch (IOException e1) {
@@ -303,7 +327,7 @@ public class VikorController {
 			Stage primaryStage = new Stage();
 			try {	
 					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
 					f.start(primaryStage);
 				
 				} catch (IOException e1) {
@@ -315,7 +339,7 @@ public class VikorController {
 			Stage primaryStage = new Stage();
 			try {	
 					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Settings.getV(), Settings);
+					t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
 					f.start(primaryStage);
 				
 				} catch (IOException e1) {

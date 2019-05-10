@@ -157,7 +157,7 @@ public class ClassicVikor {
 				
 				int o = VikorController.Settings.getQvstep();
 				double qvs = VikorController.Settings.getQvs();
-				double v = VikorController.Settings.getV();
+				double v = V;
 				ObservableList<Double> v1 = FXCollections.observableArrayList();
 				for(int i = 0; i < o /2;i++) {
 					v1.add(v - (o/2 - i)*(qvs) );

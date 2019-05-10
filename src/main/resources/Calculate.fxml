@@ -15,10 +15,10 @@
    <children>
       <BorderPane prefHeight="588.0" prefWidth="855.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <AnchorPane prefHeight="35.0" prefWidth="855.0" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="35.0" prefWidth="855.0" style="-fx-background-color: #4682B4;" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <AnchorPane prefHeight="35.0" prefWidth="855.0" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="35.0" prefWidth="855.0" style="-fx-background-color: #4682B4;" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
             <SplitPane dividerPositions="0.49899799599198397" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">

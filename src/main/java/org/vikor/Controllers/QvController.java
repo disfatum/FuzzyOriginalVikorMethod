@@ -90,8 +90,8 @@ public class QvController {
         }
         
         Series<Number, Number> series2 = new Series<>();
-        series2.getData().add(new Data<Number,Number>(VikorController.Settings.getV(),0));//settings
-        series2.getData().add(new Data<Number,Number>(VikorController.Settings.getV(),1));
+        series2.getData().add(new Data<Number,Number>(Double.valueOf(VikorController.Settings.getV()),0));//settings
+        series2.getData().add(new Data<Number,Number>(Double.valueOf(VikorController.Settings.getV()),1));
         series2.setName("V");
         chartData.add(series2);
         
@@ -100,7 +100,7 @@ public class QvController {
         //xAxis.setTickLabelsVisible(true);
         Chart.setData(chartData);
         
-        Slider.setValue(VikorController.Settings.getV());
+        Slider.setValue(Double.valueOf(VikorController.Settings.getV()));
         Slider.setShowTickLabels(true);
         Slider.setShowTickMarks(true);
         int c = 0;
@@ -158,7 +158,7 @@ public class QvController {
     	chartData.clear();	
     	Chart.getData().clear();
     	TextArea.setText("");
-    	Slider.setValue(VikorController.Settings.getV());
+    	Slider.setValue(Double.valueOf(VikorController.Settings.getV()));
     	ReButton.setDisable(true);
     	
     });

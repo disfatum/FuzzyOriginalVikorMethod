@@ -70,7 +70,7 @@ public class SettingsController {
     	OkButton.setOnAction(e->{
     	try {
     		VikorController.Settings.setSynchronization(Synh_combo.getValue());
-    		VikorController.Settings.setV(Double.valueOf(coef_v.getText()));
+    		VikorController.Settings.setV(coef_v.getText());
     		VikorController.Settings.setQvstep(Integer.valueOf(QV_counter.getText()));
     		VikorController.Settings.setQvs(Double.valueOf(Qvstep.getText()));
     		VikorController.Settings.setSRstep(Integer.valueOf(SR_counter.getText()));

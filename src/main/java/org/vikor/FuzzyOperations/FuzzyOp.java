@@ -65,4 +65,77 @@ public class FuzzyOp {
 		
 		return result;
 	}
+	
+	public int MAX_Centroid(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefazzyCentriod());
+		}
+		int res = defuzzydata.indexOf(Collections.max(defuzzydata));
+		return res;
+		
+	}
+	public int MAX_Mediana(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefuzzyMediana());
+		}
+		int res = defuzzydata.indexOf(Collections.max(defuzzydata));
+		return res;
+		
+	}
+	public int MAX_SmallestMax(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefuzzySmallestMax());
+		}
+		int res = defuzzydata.indexOf(Collections.max(defuzzydata));
+		return res;
+		
+	}
+	public int MAX_LargestMax(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefuzzyLargeMax());
+		}
+		int res = defuzzydata.indexOf(Collections.max(defuzzydata));
+		return res;
+		
+	}
+	public int Min_Centroid(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefazzyCentriod());
+		}
+		int res = defuzzydata.indexOf(Collections.min(defuzzydata));
+		return res;
+		
+	}
+	public int Min_Mediana(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefuzzyMediana());
+		}
+		int res = defuzzydata.indexOf(Collections.min(defuzzydata));
+		return res;
+		
+	}
+	public int Min_SmallestMax(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefuzzySmallestMax());
+		}
+		int res = defuzzydata.indexOf(Collections.min(defuzzydata));
+		return res;
+		
+	}
+	public int Min_LargestMax(List<TriangularFuzzyNumber> sdata) {
+		List<Double> defuzzydata = FXCollections.observableArrayList();
+		for(int i = 0; i < sdata.size();i++) {
+			defuzzydata.add(sdata.get(i).DefuzzyLargeMax());
+		}
+		int res = defuzzydata.indexOf(Collections.min(defuzzydata));
+		return res;
+		
+	}
 }

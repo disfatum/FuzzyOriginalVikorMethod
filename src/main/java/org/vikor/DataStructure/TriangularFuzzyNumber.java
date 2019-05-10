@@ -44,6 +44,23 @@ public class TriangularFuzzyNumber {
 		Double def = (Double.valueOf(this.left) + Double.valueOf(this.center)+Double.valueOf(this.right))/3;
 		return def;
 	}
+	public Double DefuzzyMediana() {
+		
+		Double v1 = 2*Double.valueOf(this.left)*Double.valueOf(this.left);
+		Double v2 = 2*Double.valueOf(this.right)*Double.valueOf(this.right);
+		Double v3 = Double.valueOf(this.center)*Double.valueOf(this.center);
+		Double v4 = (v1+v2-v3)/4;
+		Double def = Math.pow(v4, 0.5);
+		return def;
+	}
+	public Double DefuzzyLargeMax() {
+		Double def = this.getCenter();
+		return def;
+	}
+	public Double DefuzzySmallestMax() {
+		Double def = this.getCenter();
+		return def;
+	}
 	public String DataforTable() {
 		
 		String data = this.left+","+this.center+","+this.right;

@@ -3,7 +3,7 @@ package org.vikor.DataStructure;
 public class Settings {
 	
 	private String synchronization;
-	private double v;
+	private String v;
 	private int Qvstep;
 	private double Qvs;
 	private double Srs;
@@ -16,7 +16,7 @@ public class Settings {
 	public void setSynchronization(String synchronization) {
 		this.synchronization = synchronization;
 	}
-	public Settings(String synchronization,double v,int qv, int sr,double Qvs,double Srs) {
+	public Settings(String synchronization,String v,int qv, int sr,double Qvs,double Srs) {
 		this.v = v;
 		this.Qvstep = qv;
 		this.SRstep = sr;
@@ -24,10 +24,10 @@ public class Settings {
 		this.Srs = Srs;
 		this.synchronization = synchronization;
 	}
-	public double getV() {
+	public String getV() {
 		return v;
 	}
-	public void setV(double v) {
+	public void setV(String v) {
 		this.v = v;
 	}
 	
