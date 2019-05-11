@@ -101,7 +101,7 @@ public class ValuePathController {
         	}
         series1.setName(alt.get(j));
         LineChart.getData().add(series1);
-        //chartData.add(series1);
+        chartData.add(series1);
 		
         } 
         xAxis.setUpperBound(c+0.5);

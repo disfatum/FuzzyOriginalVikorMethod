@@ -5,18 +5,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.vikor.controller.DominationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.vikor.Controllers.DominationController">
    <children>
       <BorderPane layoutX="242.0" layoutY="256.0" prefHeight="568.0" prefWidth="742.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <AnchorPane prefHeight="50.0" prefWidth="742.0" style="-fx-background-color: #2e3348;" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="50.0" prefWidth="742.0" style="-fx-background-color: #4682B4;" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <AnchorPane prefHeight="50.0" prefWidth="742.0" style="-fx-background-color: #2e3348;" BorderPane.alignment="CENTER" />
+            <AnchorPane prefHeight="50.0" prefWidth="742.0" style="-fx-background-color: #4682B4;" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
-            <TableView fx:id="TableView" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="TableView" editable="true" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/tableview.css" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="AltNames" prefWidth="75.0" text="Альтернативы" />
                 <TableColumn fx:id="Domination" prefWidth="75.0" text="Доминирование" />

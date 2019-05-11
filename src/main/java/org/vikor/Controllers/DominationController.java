@@ -46,13 +46,15 @@ public class DominationController {
     	
     	ObservableList<List<Double>> data_buf = FXCollections.observableArrayList();
     	ObservableList<List<Double>> data = FXCollections.observableArrayList();
-    	for(int j = 0; j < VikorController.PTableData.get(0).size()-1;j++) {
-    		List<Double> l = FXCollections.observableArrayList();
+    	
     		for(int i =0; i <VikorController.PTableData.size();i++) {
-    			l.add(Double.valueOf(VikorController.PTableData.get(i).get(j+1)));
+    			List<Double> l = FXCollections.observableArrayList();
+    			for(int j = 0; j < VikorController.PTableData.get(0).size()-1;j++) {	
+    				l.add(Double.valueOf(VikorController.PTableData.get(i).get(j+1)));
+    			}
+    		data.add(l);	
     		}
-    		data.add(l);
-    	}
+    		
     	list = VikorController.FTableData;
     	System.out.println(data.toString());
         

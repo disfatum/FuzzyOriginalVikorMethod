@@ -20,7 +20,7 @@
                 <NumberAxis animated="false" autoRanging="false" minorTickVisible="false" side="BOTTOM" tickLabelsVisible="false" tickMarkVisible="false" fx:id="xAxis" />
               </xAxis>
               <yAxis>
-                <NumberAxis fx:id="yAxis" animated="false" autoRanging="false" minorTickVisible="false" side="LEFT" tickLabelsVisible="false" tickMarkVisible="false" />
+                <NumberAxis fx:id="yAxis" animated="false" autoRanging="false" forceZeroInRange="false" minorTickVisible="false" prefHeight="364.0" prefWidth="0.0" side="LEFT" tickLabelsVisible="false" />
               </yAxis>
             </LineChart>
          </center>

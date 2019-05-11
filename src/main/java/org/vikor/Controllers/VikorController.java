@@ -21,6 +21,7 @@ import org.vikor.Methods.FuzzyVikorMax;
 import org.vikor.Methods.FuzzyVikorMediana;
 import org.vikor.Views.Calculate;
 import org.vikor.Views.Domination;
+import org.vikor.Views.FuzzyCalculate;
 import org.vikor.Views.QvView;
 import org.vikor.Views.SRwView;
 import org.vikor.Views.Settingsview;
@@ -139,6 +140,11 @@ public class VikorController {
    		  if(Settings.getSynchronization().equals("Да")  ) {
    			  Colnames.clear();
    			if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
+   				
+   					DominationButton.setDisable(true);
+   					VPButton.setDisable(true);
+   					QvButton.setDisable(true);
+   					SRwButton.setDisable(true);
    					
 	   				System.out.println("FUZZY version initialize");
 	   				f = true;
@@ -166,6 +172,12 @@ public class VikorController {
 	   				
    				}
 	   			if(ClassicFuzzyBox.getValue().equals("Classic VIKOR") && bx == true) {
+	   				
+   					DominationButton.setDisable(false);
+   					VPButton.setDisable(false);
+   					QvButton.setDisable(false);
+   					SRwButton.setDisable(false);
+	   				
 	   				f = false;
 	   				System.out.println("Classic version initialize");
 	   				for(int i = 0; i < PTableData.size();i++) {
@@ -192,6 +204,12 @@ public class VikorController {
    		  	if(Settings.getSynchronization().equals("Нет")) {
    				
    				if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
+
+   					DominationButton.setDisable(true);
+   					VPButton.setDisable(true);
+   					QvButton.setDisable(true);
+   					SRwButton.setDisable(true);
+   					
 	   				f = true;
 	   				Colnames.clear();
 	   				System.out.println("FUZZY version initialize");
@@ -224,6 +242,12 @@ public class VikorController {
    				}	
    			
    			if(ClassicFuzzyBox.getValue().equals("Classic VIKOR") && bx == true) {
+   				
+   				DominationButton.setDisable(false);
+				VPButton.setDisable(false);
+				QvButton.setDisable(false);
+				SRwButton.setDisable(false);
+   				
    				Colnames.clear();
    				f = false;
    				FTableData.clear();
@@ -283,6 +307,15 @@ public class VikorController {
 	   			TriangularFuzzyNumber tfn3 = new TriangularFuzzyNumber(0.0,0.2,0.5);
 	   			tfn3.RefreshData(Settings.getV()+"");
 	   			LargeMax.Calculate(PTableData, FTableData, tfn3, Settings);
+	   			
+	   			FuzzyCalculate p = new FuzzyCalculate();
+	   			Stage primaryStage = new Stage();
+				try {	
+						p.start(primaryStage);
+					
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 	   		}
         });
    		
