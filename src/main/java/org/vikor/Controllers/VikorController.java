@@ -190,7 +190,7 @@ public class VikorController {
 	   				}
 	   				for(int i = 0; i < FTableData.size();i++) {
 	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(0.9,1.0,1.1);
-	   						tfn.RefreshData(FuzzyFTableData.get(i).getWeigh());
+	   						tfn.RefreshData(FTableData.get(i).getWeigh());
 	   						FTableData.get(i).setWeigh(tfn.getCenter().toString());
 	   				}
 	   				Ftable.refresh();

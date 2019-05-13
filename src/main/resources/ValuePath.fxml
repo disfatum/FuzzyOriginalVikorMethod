@@ -15,12 +15,12 @@
             <AnchorPane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #4682B4;" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
-            <LineChart fx:id="LineChart" animated="false" cache="true" cacheHint="SCALE_AND_ROTATE" BorderPane.alignment="CENTER">
+            <LineChart fx:id="VPCHART" alternativeColumnFillVisible="true" cache="true" cacheHint="SCALE_AND_ROTATE" BorderPane.alignment="CENTER">
               <xAxis>
-                <NumberAxis animated="false" autoRanging="false" minorTickVisible="false" side="BOTTOM" tickLabelsVisible="false" tickMarkVisible="false" fx:id="xAxis" />
+                <NumberAxis animated="false" autoRanging="false" forceZeroInRange="false" side="BOTTOM" tickLabelsVisible="false" tickMarkVisible="false" fx:id="xAxis" />
               </xAxis>
               <yAxis>
-                <NumberAxis fx:id="yAxis" animated="false" autoRanging="false" forceZeroInRange="false" minorTickVisible="false" prefHeight="364.0" prefWidth="0.0" side="LEFT" tickLabelsVisible="false" />
+                <NumberAxis fx:id="yAxis" animated="false" autoRanging="false" forceZeroInRange="false" side="LEFT" tickLabelsVisible="false" tickMarkVisible="false" />
               </yAxis>
             </LineChart>
          </center>

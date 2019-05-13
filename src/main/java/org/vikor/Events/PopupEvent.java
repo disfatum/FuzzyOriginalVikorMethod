@@ -43,20 +43,20 @@ public class PopupEvent {
     	
     	b2.setOnAction(e->{
 			if(VikorController.Settings.getSynchronization().equals("Да")) {
-    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
-        		OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","Максимизация");
+        		OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","Максимизация");
         		VikorController.FTableData.add(l1);
         		VikorController.FuzzyFTableData.add(l2);
         		VikorController.OriginalFTableData.add(l1);
 			}
 			if(VikorController.Settings.getSynchronization().equals("Нет")) {
 				if(VikorController.f == false) {
-					OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
+					OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","Максимизация");
 					VikorController.OriginalFTableData.add(l1);
 					VikorController.FTableData.add(l1);
 				}
 				if(VikorController.f == true) {
-					OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+					OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","Максимизация");
 					VikorController.FuzzyFTableData.add(l2);
 					VikorController.FTableData.add(l2);
 				}
@@ -192,20 +192,20 @@ public class PopupEvent {
     			PtableEvents.AddCol(b1.getText(), PTableData, Ptable);
     			VikorController.Colnames.add(b1.getText());
     			if(VikorController.Settings.getSynchronization().equals("Да")) {
-	    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
-	        		OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+	    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","Максимизация");
+	        		OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","Максимизация");
 	        		VikorController.FTableData.add(l1);
 	        		VikorController.FuzzyFTableData.add(l2);
 	        		VikorController.OriginalFTableData.add(l1);
     			}
     			if(VikorController.Settings.getSynchronization().equals("Нет")) {
     				if(VikorController.f == false) {
-    					OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","");
+    					OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","Максимизация");
     					VikorController.OriginalFTableData.add(l1);
     					VikorController.FTableData.add(l1);
     				}
     				if(VikorController.f == true) {
-    					OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","");
+    					OriginalCriterionDataStructure l2 = new OriginalCriterionDataStructure(b1.getText(),"","0.9,1,1.1","Максимизация");
     					VikorController.FuzzyFTableData.add(l2);
     					VikorController.FTableData.add(l2);
     				}

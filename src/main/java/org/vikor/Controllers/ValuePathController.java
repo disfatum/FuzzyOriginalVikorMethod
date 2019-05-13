@@ -37,7 +37,7 @@ public class ValuePathController {
     private NumberAxis yAxis;
 
     @FXML
-    private LineChart<Number, Number> LineChart;
+    private LineChart<Number, Number> VPCHART;;
 
     ObservableList<XYChart.Series<Number,Number>> chartData = FXCollections.observableArrayList();
    
@@ -53,10 +53,10 @@ public class ValuePathController {
     	ObservableList<ObservableList<Double>> data_min = FXCollections.observableArrayList();
     	ObservableList<List<Double>> data = FXCollections.observableArrayList();
     	ObservableList<List<Double>> ser = FXCollections.observableArrayList();
-    	for(int j = 0; j < VikorController.PTableData.get(0).size()-1;j++) {
+    	for(int j = 1; j < VikorController.PTableData.get(0).size();j++) {
     		List<Double> l = FXCollections.observableArrayList();
     		for(int i =0; i <VikorController.PTableData.size();i++) {
-    			l.add(Double.valueOf(VikorController.PTableData.get(i).get(j+1)));
+    			l.add(Double.valueOf(VikorController.PTableData.get(i).get(j)));
     		}
     		data.add(l);
     	}
@@ -80,10 +80,10 @@ public class ValuePathController {
     	   ObservableList<Double> c = FXCollections.observableArrayList();
     	   for(int j =0; j < data.get(i).size();j++) {
     		   
-    		   if(list.get(i).getMaxmin().equals("MAX")) {
+    		   if(list.get(i).getMaxmin().equals("Максимизация")) {
     			   c.add((double)data_buf.get(i).indexOf(data.get(i).get(j)));
     		   }
-    		   if(list.get(i).getMaxmin().equals("MIN")) {
+    		   if(list.get(i).getMaxmin().equals("Минимизация")) {
     			   c.add((double)data_min.get(i).indexOf(data.get(i).get(j)));
     		   }
     	   }
@@ -96,19 +96,19 @@ public class ValuePathController {
         		c = i+0.5;
         		double q = ser.get(i).get(j)+0.1;
         		final Data<Number, Number> d3 = new XYChart.Data<>(c,q);
-        		d3.setNode(new HoveredThresholdNodea(""+VikorController.FTableData.get(i).getName(),"Альтернатива:"+ alt.get(j)));
+        		d3.setNode(new HoveredThresholdNodea(""+VikorController.FTableData.get(i).getName()+":"+
+        				VikorController.PTableData.get(j).get(i+1),"Альтернатива:"+ alt.get(j)));
         		series1.getData().add(d3);
         	}
         series1.setName(alt.get(j));
-        LineChart.getData().add(series1);
+        System.out.println(series1+" j "+j);
         chartData.add(series1);
-		
         } 
         xAxis.setUpperBound(c+0.5);
         xAxis.setLowerBound(0);
         yAxis.setUpperBound(alt.size());
         yAxis.setLowerBound(0);
-        //LineChart.setData(chartData); 
+        VPCHART.setData(chartData); 
     }
     class HoveredThresholdNodea extends StackPane {
 
