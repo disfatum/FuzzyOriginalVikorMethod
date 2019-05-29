@@ -2,9 +2,9 @@ package org.vikor.Methods;
 
 import java.util.List;
 
+import org.vikor.Controllers.VikorController;
 import org.vikor.DataStructure.OriginalCriterionDataStructure;
 import org.vikor.DataStructure.OriginalPtableData;
-import org.vikor.DataStructure.Settings;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 import org.vikor.FuzzyOperations.FuzzyOp;
 
@@ -15,6 +15,7 @@ public class FuzzyVikorMediana {
 	
 	public ObservableList<Double> Qv = FXCollections.observableArrayList();
 	public ObservableList<TriangularFuzzyNumber> Q = FXCollections.observableArrayList();
+	public ObservableList<Double> Q1 = FXCollections.observableArrayList();
 	public ObservableList<TriangularFuzzyNumber> S = FXCollections.observableArrayList();
 	public ObservableList<TriangularFuzzyNumber> R = FXCollections.observableArrayList();
 	public ObservableList<String> AltNames = FXCollections.observableArrayList();
@@ -23,10 +24,10 @@ public class FuzzyVikorMediana {
 	public int Fsize;
 	public int Critsize;
 
-	public Double Rminus; 
-	public Double Sminus;
-	public Double Rstar; 
-	public Double Sstar; 
+	public Double Rminus1; 
+	public Double Sminus1;
+	public Double Rstar1; 
+	public Double Sstar1; 
 	
 	public ObservableList<TriangularFuzzyNumber> star = FXCollections.observableArrayList();
 	public ObservableList<List<TriangularFuzzyNumber>> D = FXCollections.observableArrayList();
@@ -37,8 +38,7 @@ public class FuzzyVikorMediana {
 
 	    ObservableList<OriginalPtableData> PTableData,
 		ObservableList<OriginalCriterionDataStructure> FTableData,
-		TriangularFuzzyNumber V,
-		Settings Settings) {
+		TriangularFuzzyNumber V) {
 		FuzzyOp Fop = new FuzzyOp();
 		d.clear();
 		AltNames.clear();
@@ -154,10 +154,13 @@ public class FuzzyVikorMediana {
 		System.out.print(S.get(i).DataforTable()+"-S");
 		}
 		TriangularFuzzyNumber Rminus = R.get(Fop.MAX_Mediana(R));
+		Rminus1 = Rminus.DefuzzyMediana();
 		TriangularFuzzyNumber Sminus = S.get(Fop.MAX_Mediana(S));
+		Sminus1 = Sminus.DefuzzyMediana();
 		TriangularFuzzyNumber Rstar = R.get(Fop.Min_Mediana(R));
+		Rstar1 = Rstar.DefuzzyMediana();
 		TriangularFuzzyNumber Sstar = S.get(Fop.Min_Mediana(S));
-	
+	    Sstar1 = Sstar.DefuzzyMediana();
 /*
  * шаг 3; вычисление Qi
  */		
@@ -177,6 +180,46 @@ public class FuzzyVikorMediana {
 			
 			System.out.println(Q.get(i).DefuzzyMediana()+"dq");
 		}
-	}		
+		ObservableList<Double> qq = FXCollections.observableArrayList(); 
+		for(int i  = 0; i < PTableData.size(); i++) {
+			Double q = (V.getCenter() * (S.get(i).DefuzzyMediana() - Sstar.DefuzzyMediana()) / (Sminus.DefuzzyMediana() - Sstar.DefuzzyMediana()))+((1 - V.DefazzyCentriod()) * 
+					(R.get(i).DefuzzyMediana() - Rstar.DefuzzyMediana())/(Rminus.DefuzzyMediana() - Rstar.DefuzzyMediana()));
+			qq.add(q);
+		}
+		for(int i  = 0; i < Q.size(); i++) {
+			System.out.println(Q.get(i).DataforTable()+"q");	
+			
+			System.out.print(qq.get(i) +"q normal медиана ||");
+		}
+		System.out.print("\n");
+		this.Q1 = qq;
+		int o = VikorController.Settings.getQvstep();
+		double qvs = VikorController.Settings.getQvs();
+		double v = V.DefazzyCentriod();
+		ObservableList<Double> v1 = FXCollections.observableArrayList();
+		for(int i = 0; i < o /2;i++) {
+			v1.add(v - (o/2 - i)*(qvs) );
+		}
+		int j = 0;
+		for (int i = o /2; i < o;i++) {
+			
+			v1.add(v+j*qvs);
+			j++;
+		}
+		this.Qv = v1;
+	}	
+	public ObservableList<Double> VikorV(double v) {
+		ObservableList<Double> qq = FXCollections.observableArrayList(); 
+		for(int i  = 0; i < S.size(); i++) {
+			Double q = (v * (S.get(i).DefuzzyMediana() - Sstar1) / (Sminus1 - Sstar1))+((1 - v) * (R.get(i).DefuzzyMediana() - Rstar1)/(Rminus1 - Rstar1));
+			qq.add(q);
+		}
+		return qq;
+	}
+	public ObservableList<String> altname(){
+		ObservableList<String> qq = FXCollections.observableArrayList();
+		qq = AltNames;
+		return qq;
+	}
 }
 

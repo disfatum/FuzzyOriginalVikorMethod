@@ -22,13 +22,15 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-              <MenuItem mnemonicParsing="false" text="Назад" />
-                  <MenuItem mnemonicParsing="false" text="Сохранить" />
+              <MenuItem fx:id="SetButton" mnemonicParsing="false" text="Настройки" />
+                  <MenuItem fx:id="OpenFile" mnemonicParsing="false" text="Открыть..." />
+                  <MenuItem fx:id="SaveFile" mnemonicParsing="false" text="Сохранить..." />
+                  <MenuItem fx:id="Exit" mnemonicParsing="false" text="Выход" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Помощь">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Руководство" />
             </items>
           </Menu>
         </menus>

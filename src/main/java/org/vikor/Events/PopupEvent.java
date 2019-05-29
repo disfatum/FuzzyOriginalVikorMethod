@@ -333,8 +333,9 @@ public class PopupEvent {
 			if(e.getClickCount() == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
 				int ind = Ptable.getSelectionModel().getSelectedIndex();
 				if(VikorController.Settings.getSynchronization().equals("Да")) {
-            		VikorController.FuzzyFTableData.remove(ind);
-            		VikorController.OriginalFTableData.remove(ind);
+            		//VikorController.FuzzyFTableData.remove(ind);
+            		//VikorController.OriginalFTableData.remove(ind);
+            		VikorController.PTableData.remove(ind);
     			}
     			if(VikorController.Settings.getSynchronization().equals("Нет")) {
     				if(VikorController.f == false) {

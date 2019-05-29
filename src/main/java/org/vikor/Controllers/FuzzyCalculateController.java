@@ -37,9 +37,6 @@ public class FuzzyCalculateController {
     private Tab tabR;
     
     @FXML
-    private Tab tabQ;
-    
-    @FXML
     private URL location;
 
     @FXML
@@ -82,7 +79,7 @@ public class FuzzyCalculateController {
     		 
     		 LineChartS.getData().clear();
     		 LineChartR.getData().clear();
-    		 LineChartQ.getData().clear();
+    		 //LineChartQ.getData().clear();
     		 
     		 if(TabPane.getSelectionModel().isSelected(0)) {
     			
@@ -109,18 +106,7 @@ public class FuzzyCalculateController {
  	 	    	LineChartR.getData().add(series1);
  	    	}
     	 }
-    	 if(TabPane.getSelectionModel().isSelected(2)) {
-    		
-	 	    	for(int j = 0; j < Cindex.Q.size();j++) {
-	 	    		Series<Number, Number> series1= new Series<>();
-	 	    		series1.getData().add(new Data<Number,Number>(Cindex.Q.get(j).getLeft(), 0));
-	 	    		series1.getData().add(new Data<Number,Number>(Cindex.Q.get(j).getCenter(), 1));
-	 	    		series1.getData().add(new Data<Number,Number>(Cindex.Q.get(j).getRight(), 0));
-	 	    		series1.setName("Q "+alt.get(j));
-	
-	 	 	    	LineChartQ.getData().add(series1);
-	 	    	}
- 	    	}
+    	 
     	 });
     	 
     	 
@@ -137,7 +123,7 @@ public class FuzzyCalculateController {
     			 
     		    	for(int i = 0; i < c; i++) {
     		    		XYChart.Series<String, Number> alt1 = new XYChart.Series<String, Number>();
-    		    		alt1.getData().add(new XYChart.Data<String, Number>("", Cindex.Q.get(i).DefazzyCentriod()));
+    		    		alt1.getData().add(new XYChart.Data<String, Number>("", Cindex.Q.get(i)));
     		    		alt1.setName(alt.get(i));
     		    		BarChart.getData().add(alt1);
     		    	}
@@ -148,7 +134,7 @@ public class FuzzyCalculateController {
     			 
     		    	for(int i = 0; i < c; i++) {
     		    		XYChart.Series<String, Number> alt1 = new XYChart.Series<String, Number>();
-    		    		alt1.getData().add(new XYChart.Data<String, Number>("", Mediana.Q.get(i).DefuzzyMediana()));
+    		    		alt1.getData().add(new XYChart.Data<String, Number>("", Mediana.Q1.get(i)));
     		    		alt1.setName(alt.get(i));
     		    		BarChart.getData().add(alt1);
     		    	}
@@ -159,7 +145,7 @@ public class FuzzyCalculateController {
     			 
     		    	for(int i = 0; i < c; i++) {
     		    		XYChart.Series<String, Number> alt1 = new XYChart.Series<String, Number>();
-    		    		alt1.getData().add(new XYChart.Data<String, Number>("", LargeMax.Q.get(i).DefuzzyLargeMax()));
+    		    		alt1.getData().add(new XYChart.Data<String, Number>("", LargeMax.Q1.get(i)));
     		    		alt1.setName(alt.get(i));
     		    		BarChart.getData().add(alt1);
     		    	}
@@ -184,7 +170,7 @@ public class FuzzyCalculateController {
     	VikorTableData l = new VikorTableData(VikorController.PTableData.get(i).get(0),
 		VikorController.Cindex.S.get(i).DefazzyCentriod(),
 		VikorController.Cindex.R.get(i).DefazzyCentriod(),
-		VikorController.Cindex.Q.get(i).DefazzyCentriod());
+		VikorController.Cindex.Q1.get(i));
     		Data.add(l);
     	}
     	

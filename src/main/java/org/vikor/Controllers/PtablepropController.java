@@ -3,6 +3,7 @@ package org.vikor.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.vikor.Alerts.Alerts;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 
 import com.jfoenix.controls.JFXButton;
@@ -129,7 +130,8 @@ public class PtablepropController {
     	    	ps  = (Stage) b2.getScene().getWindow();
     	    	ps.close();
     		} catch (Exception e1) {
-    			//do nothing
+    			  Alerts alert = new Alerts();
+    			  alert.ErrorData();
     		}
     	});
     	b2.setOnAction(e->{

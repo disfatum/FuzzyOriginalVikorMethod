@@ -3,12 +3,16 @@ package org.vikor.Controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPopup;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.vikor.Alerts.Alerts;
+import org.vikor.DataStructure.OpenProject;
 import org.vikor.DataStructure.OriginalCriterionDataStructure;
 import org.vikor.DataStructure.OriginalPtableData;
+import org.vikor.DataStructure.SaveProject;
 import org.vikor.DataStructure.Settings;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 import org.vikor.Events.FtableEvent;
@@ -22,6 +26,7 @@ import org.vikor.Methods.FuzzyVikorMediana;
 import org.vikor.Views.Calculate;
 import org.vikor.Views.Domination;
 import org.vikor.Views.FuzzyCalculate;
+import org.vikor.Views.QvFuzzy;
 import org.vikor.Views.QvView;
 import org.vikor.Views.SRwView;
 import org.vikor.Views.Settingsview;
@@ -31,15 +36,19 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -80,6 +89,18 @@ public class VikorController {
     
     @FXML
     private JFXPopup Ftablepopfirst;
+    
+    @FXML
+    private MenuItem SetButton;
+
+    @FXML
+    private MenuItem OpenFile;
+
+    @FXML
+    private MenuItem SaveFile;
+
+    @FXML
+    private MenuItem Exit;
     
     @FXML
     private JFXPopup Fnamepop;
@@ -128,6 +149,7 @@ public class VikorController {
    	public static boolean f = false;
    	
    	public static Settings Settings = new Settings("Да","0.5",10,10,0.01,0.01);
+   	Alerts alert = new Alerts();
    	
    	@FXML
     void initialize() {
@@ -136,14 +158,14 @@ public class VikorController {
    		firstenter();
    		
    	ClassicFuzzyBox.addEventHandler(Event.ANY, e->{
-   			
+   	try {		
    		  if(Settings.getSynchronization().equals("Да")  ) {
    			  Colnames.clear();
    			if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
    				
    					DominationButton.setDisable(true);
    					VPButton.setDisable(true);
-   					QvButton.setDisable(true);
+   					//QvButton.setDisable(true);
    					SRwButton.setDisable(true);
    					
 	   				System.out.println("FUZZY version initialize");
@@ -175,7 +197,7 @@ public class VikorController {
 	   				
    					DominationButton.setDisable(false);
    					VPButton.setDisable(false);
-   					QvButton.setDisable(false);
+   					//QvButton.setDisable(false);
    					SRwButton.setDisable(false);
 	   				
 	   				f = false;
@@ -207,7 +229,7 @@ public class VikorController {
 
    					DominationButton.setDisable(true);
    					VPButton.setDisable(true);
-   					QvButton.setDisable(true);
+   					//QvButton.setDisable(true);
    					SRwButton.setDisable(true);
    					
 	   				f = true;
@@ -245,7 +267,7 @@ public class VikorController {
    				
    				DominationButton.setDisable(false);
 				VPButton.setDisable(false);
-				QvButton.setDisable(false);
+				//QvButton.setDisable(false);
 				SRwButton.setDisable(false);
    				
    				Colnames.clear();
@@ -274,12 +296,17 @@ public class VikorController {
 	   			}
    			}
    		}
+   	}
+   	catch(Exception ex) {
+   		alert.ErrorData();
+   	}
    	});
    	
    	Event event = new Event(Event.ANY);
     ClassicFuzzyBox.fireEvent(event);
     
    		CalculateButton.setOnAction(e->{
+   			try {
 	   		if(ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
 	        	Calculate f = new Calculate();
 				Stage primaryStage = new Stage();
@@ -294,19 +321,17 @@ public class VikorController {
 	   		}
 	   		if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR")) {
 	   			Cindex = new FuzzyVikorCentroid();
-	   			TriangularFuzzyNumber tfn1 = new TriangularFuzzyNumber(0.0,0.2,0.5);
-	   			tfn1.RefreshData(Settings.getV()+"");
-	   			Cindex.Calculate(PTableData, FTableData, tfn1, Settings);
-	   			
 	   			Mediana = new FuzzyVikorMediana();
-	   			TriangularFuzzyNumber tfn2 = new TriangularFuzzyNumber(0.0,0.2,0.5);
-	   			tfn2.RefreshData(Settings.getV()+"");
-	   			Mediana.Calculate(PTableData, FTableData, tfn2, Settings);
-	   			
 	   			LargeMax = new FuzzyVikorMax();
-	   			TriangularFuzzyNumber tfn3 = new TriangularFuzzyNumber(0.0,0.2,0.5);
-	   			tfn3.RefreshData(Settings.getV()+"");
-	   			LargeMax.Calculate(PTableData, FTableData, tfn3, Settings);
+	   			
+	   			TriangularFuzzyNumber tfn1 = new TriangularFuzzyNumber(0.0,0.0,0.0);
+				tfn1.setLeft(Double.valueOf(Settings.getV()));
+				tfn1.setCenter(Double.valueOf(Settings.getV()));
+				tfn1.setRight(Double.valueOf(Settings.getV()));
+				
+	   			Cindex.Calculate(PTableData, FTableData, tfn1);
+	   			Mediana.Calculate(PTableData, FTableData, tfn1);
+	   			LargeMax.Calculate(PTableData, FTableData, tfn1);
 	   			
 	   			FuzzyCalculate p = new FuzzyCalculate();
 	   			Stage primaryStage = new Stage();
@@ -317,6 +342,10 @@ public class VikorController {
 						e1.printStackTrace();
 					}
 	   		}
+   			}
+   			catch(Exception ex) {
+   				alert.ErrorData();
+   			}
         });
    		
    		SettingsButton.setOnAction(e->{
@@ -331,19 +360,49 @@ public class VikorController {
    		});
    		
    		QvButton.setOnAction(e->{
-   			QvView f = new QvView();
-			Stage primaryStage = new Stage();
-			try {	
-					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
-					f.start(primaryStage);
-				
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+   			try {
+	   		if(ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
+	   			QvView f = new QvView();
+				Stage primaryStage = new Stage();
+				try {	
+						t = new ClassicVikor();
+						t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
+						f.start(primaryStage);
+					
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	   		}
+	   		if(!ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
+	   			QvFuzzy f = new QvFuzzy();
+				Stage primaryStage = new Stage();
+				try {	
+					Cindex = new FuzzyVikorCentroid();
+		   			Mediana = new FuzzyVikorMediana();
+		   			LargeMax = new FuzzyVikorMax();
+		   			
+		   			TriangularFuzzyNumber tfn1 = new TriangularFuzzyNumber(0.0,0.0,0.0);
+					tfn1.setLeft(Double.valueOf(Settings.getV()));
+					tfn1.setCenter(Double.valueOf(Settings.getV()));
+					tfn1.setRight(Double.valueOf(Settings.getV()));
+					
+		   			Cindex.Calculate(PTableData, FTableData, tfn1);
+		   			Mediana.Calculate(PTableData, FTableData, tfn1);
+		   			LargeMax.Calculate(PTableData, FTableData, tfn1);
+						f.start(primaryStage);
+					
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	   		}
+   			}
+   			catch(Exception ex) {
+   				alert.ErrorData();
+   			}
    		});
    		
    		SRwButton.setOnAction(e->{
+   			try {
    			SRwView f = new SRwView();
 			Stage primaryStage = new Stage();
 			try {	
@@ -354,8 +413,13 @@ public class VikorController {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+   			}
+   			catch(Exception ex) {
+   				alert.ErrorData();
+   			}
    		});
    		VPButton.setOnAction(e->{
+   			try {
    			ValuePathView f = new ValuePathView();
 			Stage primaryStage = new Stage();
 			try {	
@@ -366,8 +430,13 @@ public class VikorController {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+   			}
+   			catch(Exception ex) {
+   				alert.ErrorData();
+   			}
    		});
    		DominationButton.setOnAction(e->{
+   			try {
    			Domination f = new Domination();
 			Stage primaryStage = new Stage();
 			try {	
@@ -376,9 +445,69 @@ public class VikorController {
 					f.start(primaryStage);
 				
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					//alert.ErrorData();
 				}
+   			}
+   			catch(Exception ex) {
+   				alert.ErrorData();
+   			}
    		});
+   		Exit.setOnAction(e->{
+   			alert.showConfirmation();
+   		});
+   		OpenFile.setOnAction(new EventHandler<ActionEvent>(){
+ 
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                 
+                //Set extension filter
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VKR files (*.vkr)", "*.vkr");
+                fileChooser.getExtensionFilters().add(extFilter);
+                OpenProject op  = new OpenProject();
+                //Show save file dialog
+                File file = fileChooser.showOpenDialog((Stage) VPButton.getScene().getWindow());
+                if(file != null){
+                	try {
+						op.getDat(file+"", Settings,FTableData,PTableData,ClassicFuzzyBox,Ptable,Ftable);
+					} catch (NumberFormatException e) {
+						alert.Erroropen();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						alert.Erroropen();
+					}
+                    System.out.println(file);
+                }
+            }
+             
+        });
+   		SaveFile.setOnAction(new EventHandler<ActionEvent>(){
+   		 
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                 
+                //Set extension filter
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VKR files (*.vkr)", "*.vkr");
+                fileChooser.getExtensionFilters().add(extFilter);
+                SaveProject op  = new SaveProject();
+                //Show save file dialog
+                File file = fileChooser.showOpenDialog((Stage) VPButton.getScene().getWindow());
+                if(file != null){
+                	try {
+						op.Save(file+"", Settings,FTableData,PTableData,ClassicFuzzyBox,Ptable,Ftable);
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						alert.Errosave();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						alert.Errosave();
+					}
+                    System.out.println(file);
+                }
+            }
+             
+        });
     }
    	/*
    	 * 

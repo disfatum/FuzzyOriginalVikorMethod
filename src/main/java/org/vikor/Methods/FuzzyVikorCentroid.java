@@ -2,9 +2,9 @@ package org.vikor.Methods;
 
 import java.util.List;
 
+import org.vikor.Controllers.VikorController;
 import org.vikor.DataStructure.OriginalCriterionDataStructure;
 import org.vikor.DataStructure.OriginalPtableData;
-import org.vikor.DataStructure.Settings;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 import org.vikor.FuzzyOperations.FuzzyOp;
 
@@ -14,7 +14,8 @@ import javafx.collections.ObservableList;
 public class FuzzyVikorCentroid {
 	
 	public ObservableList<Double> Qv = FXCollections.observableArrayList();
-	public ObservableList<TriangularFuzzyNumber> Q = FXCollections.observableArrayList();
+	public ObservableList<Double> Q = FXCollections.observableArrayList();
+	public ObservableList<Double> Q1 = FXCollections.observableArrayList();
 	public ObservableList<TriangularFuzzyNumber> S = FXCollections.observableArrayList();
 	public ObservableList<TriangularFuzzyNumber> R = FXCollections.observableArrayList();
 	public ObservableList<String> AltNames = FXCollections.observableArrayList();
@@ -23,10 +24,10 @@ public class FuzzyVikorCentroid {
 	public int Fsize;
 	public int Critsize;
 
-	public Double Rminus; 
-	public Double Sminus;
-	public Double Rstar; 
-	public Double Sstar; 
+	public Double Rminus1; 
+	public Double Sminus1;
+	public Double Rstar1; 
+	public Double Sstar1; 
 	
 	public ObservableList<TriangularFuzzyNumber> star = FXCollections.observableArrayList();
 	public ObservableList<List<TriangularFuzzyNumber>> D = FXCollections.observableArrayList();
@@ -37,8 +38,7 @@ public class FuzzyVikorCentroid {
 
 	    ObservableList<OriginalPtableData> PTableData,
 		ObservableList<OriginalCriterionDataStructure> FTableData,
-		TriangularFuzzyNumber V,
-		Settings Settings) {
+		TriangularFuzzyNumber V) {
 		FuzzyOp Fop = new FuzzyOp();
 		d.clear();
 		AltNames.clear();
@@ -162,10 +162,13 @@ public class FuzzyVikorCentroid {
 		System.out.print(S.get(i).DataforTable()+"-S");
 		}
 		TriangularFuzzyNumber Rminus = R.get(Fop.MAX_Centroid(R));
+		Rminus1 = Rminus.DefazzyCentriod();
 		TriangularFuzzyNumber Sminus = S.get(Fop.MAX_Centroid(S));
+		Sminus1 = Sminus.DefazzyCentriod();
 		TriangularFuzzyNumber Rstar = R.get(Fop.Min_Centroid(R));
+		Rstar1 = Rstar.DefazzyCentriod();
 		TriangularFuzzyNumber Sstar = S.get(Fop.Min_Centroid(S));
-	
+	    Sstar1 = Sstar.DefazzyCentriod();
 /*
  * шаг 3; вычисление Qi
  */		
@@ -176,15 +179,84 @@ public class FuzzyVikorCentroid {
 			TriangularFuzzyNumber q = Fop.Summ(tf1, tf2);
 			Q.add(q);
 		}
+		ObservableList<Double> qq = FXCollections.observableArrayList(); 
+		for(int i  = 0; i < PTableData.size(); i++) {
+			Double q = (V.getCenter() * (S.get(i).DefazzyCentriod() - Sstar.DefazzyCentriod()) / (Sminus.DefazzyCentriod() - Sstar.DefazzyCentriod()))+((1 - V.DefazzyCentriod()) * 
+					(R.get(i).DefazzyCentriod() - Rstar.DefazzyCentriod())/(Rminus.DefazzyCentriod() - Rstar.DefazzyCentriod()));
+			qq.add(q);
+		}
 		
-		this.Q = Q;
+		this.Q = qq;
 		this.S = S;
 		this.R = R;
+		
+		
 		for(int i  = 0; i < Q.size(); i++) {
 			System.out.println(Q.get(i).DataforTable()+"q");	
 			
-			System.out.println(Q.get(i).DefazzyCentriod()+"dq");
+			System.out.print(qq.get(i) +"q normal ||");
 		}
+		this.Q1 = qq;
+		System.out.print("\n");
+		int o = VikorController.Settings.getQvstep();
+		double qvs = VikorController.Settings.getQvs();
+		double v = V.DefazzyCentriod();
+		ObservableList<Double> v1 = FXCollections.observableArrayList();
+		for(int i = 0; i < o /2;i++) {
+			v1.add(v - (o/2 - i)*(qvs) );
+		}
+		int j = 0;
+		for (int i = o /2; i < o;i++) {
+			
+			v1.add(v+j*qvs);
+			j++;
+		}
+		this.Qv = v1;
 	}		
+	/*public Double VikorS(double w,int c, int critnumber){
+		ObservableList<Double> wg = FXCollections.observableArrayList();
+		wg = W;
+		wg.set(critnumber, w);
+		System.out.println(wg.size()+" size");	
+		System.out.println(wg.toString()+" size");
+			double S = 0;
+			for(int j  = 0; j < wg.size(); j++) {
+				S = S + wg.get(j)*((star.get(j) - Double.valueOf(d.get(c).get(j)))/(star.get(j) - minus.get(j)));	
+			}
+		
+		return S;
+	}/
+	/**public Double VikorR(double newValue,int c, int critnumber){
+			
+			double R;
+			ObservableList<Double> R1 = FXCollections.observableArrayList();
+			ObservableList<Double> wg = FXCollections.observableArrayList();
+			wg = W;
+			wg.set(critnumber, newValue);
+			System.out.println(wg.size()+" size");	
+			System.out.println(wg.toString()+" size");
+			for(int j  = 0; j < wg.size(); j++) {
+				R1.add(wg.get(j)*((star.get(j) - Double.valueOf(d.get(c).get(j)))/(star.get(j) - minus.get(j))));
+				System.out.println(d.get(c).get(j)+" d.get(c).get(j) from vikor");
+			}
+			
+		R = Collections.max(R1);
+		System.out.println(R+" r from vikor");	
+		System.out.println(newValue+" newValue from vikor");
+		return R;
+	}/*/
+	public ObservableList<Double> VikorV(double v) {
+		ObservableList<Double> qq = FXCollections.observableArrayList(); 
+		for(int i  = 0; i < S.size(); i++) {
+			Double q = (v * (S.get(i).DefazzyCentriod() - Sstar1) / (Sminus1 - Sstar1))+((1 - v) * (R.get(i).DefazzyCentriod() - Rstar1)/(Rminus1 - Rstar1));
+			qq.add(q);
+		}
+		return qq;
+	}
+	public ObservableList<String> altname(){
+		ObservableList<String> qq = FXCollections.observableArrayList();
+		qq = AltNames;
+		return qq;
+	}
 }
 

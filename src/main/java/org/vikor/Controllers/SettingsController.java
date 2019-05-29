@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.vikor.Alerts.Alerts;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -75,13 +77,14 @@ public class SettingsController {
     		VikorController.Settings.setQvs(Double.valueOf(Qvstep.getText()));
     		VikorController.Settings.setSRstep(Integer.valueOf(SR_counter.getText()));
     		VikorController.Settings.setSrs(Double.valueOf(SRstep.getText()));
-    		
+    		Double.valueOf(VikorController.Settings.getV());
 	        Stage ps;
 		    ps  = (Stage) OkButton.getScene().getWindow();
 		    ps.close();
 		    
 			} catch (Exception e1) {
-				//do nothing
+				Alerts alert = new Alerts();
+				alert.ErrorData();
 			}
     	});
     }

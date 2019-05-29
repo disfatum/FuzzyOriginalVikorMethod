@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.vikor.Alerts.Alerts;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +61,7 @@ public class FtablepropController {
         MxMnBox.setValue(VikorController.FTableData.get(index).getMaxmin());
         
         OkButton.setOnAction(e->{
-        	
+          try {	
         	VikorController.FTableData.get(index).setName(NameField.getText());
         	VikorController.FTableData.get(index).setDiscription(DiscField.getText());
         	VikorController.FTableData.get(index).setWeigh(WeighField.getText());
@@ -75,6 +77,11 @@ public class FtablepropController {
      			//do nothing
      		}
         	 jb.fireEvent(e);
+          }
+          catch(Exception ex) {
+        	  Alerts alert = new Alerts();
+			alert.ErrorData();
+          }
         });
         CencelButton.setOnAction(e->{
         try {
