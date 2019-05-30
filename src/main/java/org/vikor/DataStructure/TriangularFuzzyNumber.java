@@ -1,5 +1,8 @@
 package org.vikor.DataStructure;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class TriangularFuzzyNumber {
 
 	private String left;
@@ -17,7 +20,8 @@ public class TriangularFuzzyNumber {
 	}
 
 	public Double getLeft() {
-		return Double.valueOf(left);
+		Double tfn = new BigDecimal(Double.valueOf(left)).setScale(3, RoundingMode.UP).doubleValue();
+		return tfn;
 	}
 
 	public void setLeft(Double left) {
@@ -25,7 +29,8 @@ public class TriangularFuzzyNumber {
 	}
 
 	public Double getCenter() {
-		return Double.valueOf(center);
+		Double tfn = new BigDecimal(Double.valueOf(center)).setScale(3, RoundingMode.UP).doubleValue();
+		return tfn;
 	}
 
 	public void setCenter(Double center) {
@@ -42,6 +47,7 @@ public class TriangularFuzzyNumber {
 	public Double DefazzyCentriod() {
 	
 		Double def = (Double.valueOf(this.left) + Double.valueOf(this.center)+Double.valueOf(this.right))/3;
+		def= new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
 		return def;
 	}
 	public Double DefuzzyMediana() {
@@ -51,6 +57,7 @@ public class TriangularFuzzyNumber {
 		Double v3 = Double.valueOf(this.center)*Double.valueOf(this.center);
 		Double v4 = (v1+v2-v3)/4;
 		Double def = Math.pow(v4, 0.5);
+		def= new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
 		return def;
 	}
 	public Double DefuzzyLargeMax() {
@@ -59,6 +66,7 @@ public class TriangularFuzzyNumber {
 	}
 	public Double DefuzzySmallestMax() {
 		Double def = this.getCenter();
+		def= new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
 		return def;
 	}
 	public String DataforTable() {

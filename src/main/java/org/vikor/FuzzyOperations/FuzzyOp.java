@@ -1,5 +1,7 @@
 package org.vikor.FuzzyOperations;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
@@ -14,9 +16,18 @@ public class FuzzyOp {
 		l.add(tfn2.getLeft());l.add(tfn2.getCenter());l.add(tfn2.getRight());
 		Collections.sort(l);
 		System.out.println(l);
-		result.setLeft(tfn1.getLeft()*l.get(0));
-		result.setCenter(tfn1.getCenter()*tfn2.getCenter());
-		result.setRight(tfn1.getRight()*l.get(2));
+		
+		double def = tfn1.getLeft()*l.get(0);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setLeft(def);
+		
+		def = tfn1.getCenter()*tfn2.getCenter();
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setCenter(def);
+		
+		def = tfn1.getRight()*l.get(2);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setRight(def);
 		
 		return result;
 		
@@ -29,9 +40,17 @@ public class FuzzyOp {
 		l.add(tfn2.getLeft());l.add(tfn2.getCenter());l.add(tfn2.getRight());
 		Collections.sort(l);
 		
-		result.setLeft(tfn1.getLeft()+l.get(0));
-		result.setCenter(tfn1.getCenter()+tfn2.getCenter());
-		result.setRight(tfn1.getRight()+l.get(2));
+		double def = tfn1.getLeft()+l.get(0);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setLeft(def);
+		
+		def = tfn1.getCenter()+tfn2.getCenter();
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setCenter(def);
+		
+		def = tfn1.getRight()+l.get(2);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setRight(def);
 		
 		return result;
 		
@@ -44,9 +63,16 @@ public class FuzzyOp {
 		l.add(tfn2.getLeft());l.add(tfn2.getCenter());l.add(tfn2.getRight());
 		Collections.sort(l);
 		//System.out.println(l);
-		result.setLeft(tfn1.getLeft()-l.get(2));
-		result.setCenter(tfn1.getCenter()-tfn2.getCenter());
-		result.setRight(tfn1.getRight()-l.get(0));
+		
+		double def = tfn1.getLeft()-l.get(2);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setLeft(def);
+		def = tfn1.getCenter()-tfn2.getCenter();
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setCenter(def);
+		def =tfn1.getRight()-l.get(0);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setRight(def);
 		
 		return result;
 		
@@ -58,10 +84,17 @@ public class FuzzyOp {
 		List<Double> l = FXCollections.observableArrayList();
 		l.add(tfn2.getLeft());l.add(tfn2.getCenter());l.add(tfn2.getRight());
 		Collections.sort(l);
+		double def = tfn1.getLeft()/l.get(2);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setLeft(def);
 		
-		result.setLeft(tfn1.getLeft()/l.get(2));
-		result.setCenter(tfn1.getCenter()/tfn2.getCenter());
-		result.setRight(tfn1.getRight()/l.get(0));
+		def = tfn1.getCenter()/tfn2.getCenter();
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setCenter(def);
+		
+		def = tfn1.getRight()/l.get(0);
+		def = new BigDecimal(def).setScale(3, RoundingMode.UP).doubleValue();
+		result.setRight(def);
 		
 		return result;
 	}

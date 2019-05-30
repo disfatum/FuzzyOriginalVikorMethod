@@ -158,7 +158,7 @@ public class VikorController {
    		firstenter();
    		
    	ClassicFuzzyBox.addEventHandler(Event.ANY, e->{
-   	//try {		
+   	try {		
    		  if(Settings.getSynchronization().equals("Да")  ) {
    			  Colnames.clear();
    			if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
@@ -309,10 +309,10 @@ public class VikorController {
 	   			}
    			}
    		}
-   	//}
-   //	catch(Exception ex) {
-   //		alert.ErrorData();
-   //}
+   	}
+   	catch(Exception ex) {
+   		alert.ErrorData();
+   }
    	});
    	
    	Event event = new Event(Event.ANY);
