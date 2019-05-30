@@ -46,6 +46,7 @@ public class OriginalPtableData {
 	}
 	public String get(int j) {
 		// TODO Auto-generated method stub
+		System.out.println(j+" as");
 		return this.list.get(j);
 	}
 }

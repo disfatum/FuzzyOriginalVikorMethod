@@ -42,10 +42,10 @@ public class PtableEvent {
 		   if(VikorController.Settings.getSynchronization().equals("Нет")) {
 			   if(VikorController.f == true) {
 				   PTableData.get(i).add("0.9,1.0,1.1");
-				  // VikorController.FuzzyPTableData.get(i).add(new TriangularFuzzyNumber(0.9,1.0,1.1));
+				   VikorController.FuzzyPTableData.get(i).add(new TriangularFuzzyNumber(0.9,1.0,1.1));
 			   }
 			   else {
-				  // VikorController.OriginalPTableData.get(i).add("1");
+				   VikorController.OriginalPTableData.get(i).add("1");
 				   PTableData.get(i).add("1");
 			   }
 		   }

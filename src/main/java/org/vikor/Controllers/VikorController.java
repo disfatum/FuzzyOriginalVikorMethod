@@ -158,7 +158,7 @@ public class VikorController {
    		firstenter();
    		
    	ClassicFuzzyBox.addEventHandler(Event.ANY, e->{
-   	try {		
+   	//try {		
    		  if(Settings.getSynchronization().equals("Да")  ) {
    			  Colnames.clear();
    			if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
@@ -226,7 +226,7 @@ public class VikorController {
    		  	if(Settings.getSynchronization().equals("Нет")) {
    				
    				if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
-
+                    
    					DominationButton.setDisable(true);
    					VPButton.setDisable(true);
    					//QvButton.setDisable(true);
@@ -234,16 +234,17 @@ public class VikorController {
    					
 	   				f = true;
 	   				Colnames.clear();
-	   				System.out.println("FUZZY version initialize");
+	   				System.out.println("FUZZY version initialize"+ FuzzyPTableDataColumns.size());
 	   				PTableData.clear();
 	   				FTableData.clear();
 	   				Ptable.getColumns().clear();
-	   				AltNameCol();
-	   				
+	   				//AltNameCol();
+
+	   				Ptable.getColumns().addAll(FuzzyPTableDataColumns);
 	   				for(int i = 0; i < FuzzyPTableData.size();i++) {
 	   					ObservableList<String > list1 =  FXCollections.observableArrayList();
 	   					list1.add(FuzzyPTableData.get(i).get(0).Name);
-	   					for(int j = 1 ; j < FuzzyPTableData.get(i).size();j++) {
+	   					for(int j = 0 ; j < FuzzyPTableData.get(i).size();j++) {
 	   						
 	   							list1.add(FuzzyPTableData.get(i).get(j).DataforTable());
 	   					}
@@ -254,7 +255,13 @@ public class VikorController {
 	   					FTableData.add(FuzzyFTableData.get(i));
 	   				}
 	   				Ftable.refresh();
-	   				Ptable.getColumns().addAll(FuzzyPTableDataColumns);
+	   				for(int i = 0; i < PTableData.size();i++) {
+	   					for(int j = 0; j < PTableData.get(i).size();j++) {
+	   					System.out.println(PTableData.get(i).get(j)+" i="+i+"|| size "+Ptable.getColumns().size()+" "+PTableData.get(i).size());
+	   				}
+	   				}
+	   				
+	   				
 	   				Ptable.setItems(PTableData);
 	   				Ptable.refresh();
 	   				bx = true;
@@ -296,10 +303,10 @@ public class VikorController {
 	   			}
    			}
    		}
-   	}
-   	catch(Exception ex) {
-   		alert.ErrorData();
-   	}
+   	//}
+   //	catch(Exception ex) {
+   //		alert.ErrorData();
+   //}
    	});
    	
    	Event event = new Event(Event.ANY);
