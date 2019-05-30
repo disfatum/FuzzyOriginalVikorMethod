@@ -282,19 +282,25 @@ public class VikorController {
    				FTableData.clear();
    				PTableData.clear();
    				Ptable.getColumns().clear();
-   				AltNameCol();
+   				//AltNameCol();
+
+   				Ptable.getColumns().addAll(OriginalPTableDataColumns);
    				System.out.println("Classic version initialize");
    				for(int i = 0; i < OriginalPTableData.size();i++) {
-   						OriginalPtableData pd = new OriginalPtableData(OriginalPTableData.get(i));
+   					ObservableList<String > list1 =  FXCollections.observableArrayList();
+   					//list1.add(OriginalPTableData.get(i).get(0));
+   					for(int j = 0 ; j < OriginalPTableData.get(i).size();j++) {
+   						    System.out.print(OriginalPTableData.get(i).get(j)+ " ;");
+   							list1.add(OriginalPTableData.get(i).get(j));
+   					} System.out.print("\n");
+   						OriginalPtableData pd = new OriginalPtableData(list1);
    						PTableData.add(pd);
-   					
    				}
    				
    				for(int i = 0; i < OriginalFTableData.size();i++) {
    					FTableData.add(OriginalFTableData.get(i));
    				}
    				Ftable.refresh();
-   				Ptable.getColumns().addAll(OriginalPTableDataColumns);
    				Ptable.setItems(PTableData);
    				Ptable.refresh();
    				bx = false;
