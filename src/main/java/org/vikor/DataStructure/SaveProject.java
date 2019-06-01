@@ -1,8 +1,10 @@
 package org.vikor.DataStructure;
 
 import java.io.FileWriter;
+import java.io.IOException;
 
 import org.vikor.Alerts.Alerts;
+import org.vikor.Controllers.VikorController;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -25,55 +27,60 @@ public class SaveProject {
 		String PFUZZY = "PFUZZY=";
 		String PCLASSIC = "PCLASSIC=";
 		
-		if(classicFuzzyBox.getValue().equals("Fuzzy VIKOR")) {
-			for(int i = 0; i < fTableData.size();i++) {
+		//if(classicFuzzyBox.getValue().equals("Fuzzy VIKOR")) {
+			for(int i = 0; i < VikorController.FuzzyFTableData.size();i++) {
 				FFuzzy = FFuzzy+fTableData.get(i).getName()+";"+fTableData.get(i).getDiscription()+";"+fTableData.get(i).getWeigh()+";"
-						+fTableData.get(i).getMaxmin()+"-";
+						+VikorController.FuzzyFTableData.get(i).getMaxmin()+"-";
 			}
-			for(int i = 0; i < pTableData.size();i++) {
-				for(int j = 0; j < pTableData.get(i).size();j++) {
-					PFUZZY = PFUZZY + pTableData.get(i).get(j)+";";
+			for(int i = 0; i < VikorController.FuzzyPTableData.size();i++) {
+				for(int j = 0; j < VikorController.FuzzyPTableData.get(i).size();j++) {
+					PFUZZY = PFUZZY + VikorController.FuzzyPTableData.get(i).get(j).DataforTable()+";";
 				}
 				PFUZZY = PFUZZY+"-";
 			}
-		}
+		
 		FFuzzy = FFuzzy+"\n";
 		PFUZZY = PFUZZY+"\n";
-		if(classicFuzzyBox.getValue().equals("Classic VIKOR")) {
-			for(int i = 0; i < fTableData.size();i++) {
+		//if(classicFuzzyBox.getValue().equals("Classic VIKOR")) {
+			for(int i = 0; i < VikorController.OriginalFTableData.size();i++) {
 				FCLASSIC = FCLASSIC+fTableData.get(i).getName()+";"+fTableData.get(i).getDiscription()+";"+fTableData.get(i).getWeigh()+";"
-						+fTableData.get(i).getMaxmin()+"-";
+						+VikorController.OriginalFTableData.get(i).getMaxmin()+"-";
 			}
-			for(int i = 0; i < pTableData.size();i++) {
-				for(int j = 0; j < pTableData.get(i).size();j++) {
-					PCLASSIC = PCLASSIC + pTableData.get(i).get(j)+";";
+			for(int i = 0; i < VikorController.OriginalPTableData.size();i++) {
+				for(int j = 0; j < VikorController.OriginalPTableData.get(i).size();j++) {
+					PCLASSIC = PCLASSIC + VikorController.OriginalPTableData.get(i).get(j)+";";
 				}
 				PCLASSIC = PCLASSIC+"-";
-			}
+			//}
 			
 		}
 		PCLASSIC = PCLASSIC+"\n";
 		FCLASSIC = FCLASSIC+"\n";
 		
-		try(FileWriter writer = new FileWriter(name, false))
-        {
-           // запись всей строки
-            writer.write(mode+System.getProperty("line.separator")+
-            		Sets+System.getProperty("line.separator")+
-            		FFuzzy+System.getProperty("line.separator")+
-            		FCLASSIC+System.getProperty("line.separator")+
-            		PFUZZY+System.getProperty("line.separator")+
-            		PCLASSIC+System.getProperty("line.separator"));
+		
+		try {
+			FileWriter writer = new FileWriter(name, false);
+				writer.write(mode+System.getProperty("line.separator")+
+						Sets+System.getProperty("line.separator")+
+						FFuzzy+System.getProperty("line.separator")+
+						FCLASSIC+System.getProperty("line.separator")+
+						PFUZZY+System.getProperty("line.separator")+
+						PCLASSIC+System.getProperty("line.separator"));
+				writer.flush();
+				writer.close();
+				Alerts a = new Alerts();
+				a.success();
+			} catch (IOException e) {
+				 Alerts a = new Alerts();
+				 a.Errosave();
+			}
             // запись по символам
            // writer.append('\n');
            // writer.append('E');
              
-            writer.flush();
-        }
-        catch(Exception ex){
-             
-            Alerts a = new Alerts();
-            a.Errosave();
-        } 
-	}
+           
+	}   
 }
+	
+//Alerts a = new Alerts();
+// a.Errosave();

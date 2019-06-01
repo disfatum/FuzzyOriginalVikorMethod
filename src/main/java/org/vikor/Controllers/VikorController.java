@@ -28,6 +28,7 @@ import org.vikor.Views.Domination;
 import org.vikor.Views.FuzzyCalculate;
 import org.vikor.Views.QvFuzzy;
 import org.vikor.Views.QvView;
+import org.vikor.Views.SRwFuzzy;
 import org.vikor.Views.SRwView;
 import org.vikor.Views.Settingsview;
 import org.vikor.Views.ValuePathView;
@@ -166,7 +167,7 @@ public class VikorController {
    					DominationButton.setDisable(true);
    					VPButton.setDisable(true);
    					//QvButton.setDisable(true);
-   					SRwButton.setDisable(true);
+   					//SRwButton.setDisable(true);
    					
 	   				System.out.println("FUZZY version initialize");
 	   				f = true;
@@ -198,7 +199,7 @@ public class VikorController {
    					DominationButton.setDisable(false);
    					VPButton.setDisable(false);
    					//QvButton.setDisable(false);
-   					SRwButton.setDisable(false);
+   					//SRwButton.setDisable(false);
 	   				
 	   				f = false;
 	   				System.out.println("Classic version initialize");
@@ -230,7 +231,7 @@ public class VikorController {
    					DominationButton.setDisable(true);
    					VPButton.setDisable(true);
    					//QvButton.setDisable(true);
-   					SRwButton.setDisable(true);
+   					//SRwButton.setDisable(true);
    					
 	   				f = true;
 	   				Colnames.clear();
@@ -275,7 +276,7 @@ public class VikorController {
    				DominationButton.setDisable(false);
 				VPButton.setDisable(false);
 				//QvButton.setDisable(false);
-				SRwButton.setDisable(false);
+				//SRwButton.setDisable(false);
    				
    				Colnames.clear();
    				f = false;
@@ -415,20 +416,40 @@ public class VikorController {
    		});
    		
    		SRwButton.setOnAction(e->{
-   			try {
-   			SRwView f = new SRwView();
-			Stage primaryStage = new Stage();
-			try {	
-					t = new ClassicVikor();
-					t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
-					f.start(primaryStage);
-				
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+   			if(ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
+	   			try {
+	   			SRwView f = new SRwView();
+				Stage primaryStage = new Stage();
+				try {	
+						t = new ClassicVikor();
+						t.Calculate(PTableData, FTableData, Double.valueOf(Settings.getV()), Settings);
+						f.start(primaryStage);
+					
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	   			}
+	   			catch(Exception ex) {
+	   				alert.ErrorData();
+	   			}
    			}
-   			catch(Exception ex) {
-   				alert.ErrorData();
+   			if(!ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
+   				try {
+   		   			SRwFuzzy f = new SRwFuzzy();
+   					Stage primaryStage = new Stage();
+   					try {	
+   							Cindex = new FuzzyVikorCentroid();
+   							TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(Double.valueOf(Settings.getV()),Double.valueOf(Settings.getV()),Double.valueOf(Settings.getV()));
+   							Cindex.Calculate(PTableData, FTableData, tfn);
+   							f.start(primaryStage);
+   						
+   						} catch (IOException e1) {
+   							e1.printStackTrace();
+   						}
+   		   			}
+   		   			catch(Exception ex) {
+   		   				alert.ErrorData();
+   		   			}
    			}
    		});
    		VPButton.setOnAction(e->{
@@ -507,15 +528,15 @@ public class VikorController {
                 //Show save file dialog
                 File file = fileChooser.showOpenDialog((Stage) VPButton.getScene().getWindow());
                 if(file != null){
-                	try {
+                	//try {
 						op.Save(file+"", Settings,FTableData,PTableData,ClassicFuzzyBox,Ptable,Ftable);
-					} catch (NumberFormatException e) {
+				//	} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
-						alert.Errosave();
-					} catch (Exception e) {
+					//	alert.Errosave();
+					//} catch (Exception e) {
 						// TODO Auto-generated catch block
-						alert.Errosave();
-					}
+				//		alert.Errosave();
+				//	}
                     System.out.println(file);
                 }
             }

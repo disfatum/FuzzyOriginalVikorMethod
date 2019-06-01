@@ -265,7 +265,7 @@ public class OpenProject {
         	 ptable.getColumns().addAll(VikorController.OriginalPTableDataColumns);
         }
         for(int i = 0; i < VikorController.FuzzyPTableDataColumns.size();i++) {
-       	   AddColfuzy(VikorController.FuzzyPTableDataColumns.get(i), pTableData, ptable);
+       	   AddColfuzy(VikorController.FuzzyPTableDataColumns.get(i), pTableData, ptable,i);
        	}
          for(int i = 0; i < VikorController.OriginalPTableDataColumns.size();i++) {
         	 origAddCol(VikorController.OriginalPTableDataColumns.get(i), pTableData, ptable, i);
@@ -349,7 +349,8 @@ public class OpenProject {
 	}
 	public static void AddColfuzy(TableColumn<OriginalPtableData,String> col,
 			ObservableList<OriginalPtableData> pTableData,
-			TableView<OriginalPtableData> ptable) {
+			TableView<OriginalPtableData> ptable,
+			int i) {
 			//TableColumn<OriginalPtableData,String> col = new TableColumn<OriginalPtableData,String>(NAME);
 
 		//
@@ -369,7 +370,7 @@ public class OpenProject {
            
             });
 		
-		for(int i = 0; i < ptable.getColumns().size();i++) {
+		for(int j = 0; j < ptable.getColumns().size();j++) {
 			final int q = i;
 			col.setCellValueFactory(new Callback<CellDataFeatures<OriginalPtableData, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<OriginalPtableData, String> p) {

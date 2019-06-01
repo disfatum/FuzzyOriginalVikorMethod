@@ -48,5 +48,12 @@ public class Alerts {
 	 
 	        alert.showAndWait();
 		}
+	  public void success() {
+		  Alert alert = new Alert(AlertType.INFORMATION);
+	        alert.setHeaderText("Успешно выполнено:");
+	        alert.setContentText("Файл сохранен");
+	 
+	        alert.showAndWait();
+	  }
 	  
 }

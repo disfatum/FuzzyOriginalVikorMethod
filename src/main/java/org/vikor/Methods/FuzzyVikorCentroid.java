@@ -213,38 +213,36 @@ public class FuzzyVikorCentroid {
 		}
 		this.Qv = v1;
 	}		
-	/*public Double VikorS(double w,int c, int critnumber){
-		ObservableList<Double> wg = FXCollections.observableArrayList();
+	public TriangularFuzzyNumber VikorS(TriangularFuzzyNumber w,int c, int critnumber){
+		ObservableList<TriangularFuzzyNumber> wg = FXCollections.observableArrayList();
 		wg = W;
 		wg.set(critnumber, w);
 		System.out.println(wg.size()+" size");	
 		System.out.println(wg.toString()+" size");
-			double S = 0;
+			TriangularFuzzyNumber S = new TriangularFuzzyNumber(0.0,0.0,0.0);
 			for(int j  = 0; j < wg.size(); j++) {
-				S = S + wg.get(j)*((star.get(j) - Double.valueOf(d.get(c).get(j)))/(star.get(j) - minus.get(j)));	
+					FuzzyOp Fop = new FuzzyOp();
+					S = Fop.Summ(Fop.Multyply(W.get(j),D.get(c).get(j)),S);
 			}
 		
 		return S;
-	}/
-	/**public Double VikorR(double newValue,int c, int critnumber){
+	}
+	public TriangularFuzzyNumber VikorR(TriangularFuzzyNumber w,int c, int critnumber){
 			
-			double R;
-			ObservableList<Double> R1 = FXCollections.observableArrayList();
-			ObservableList<Double> wg = FXCollections.observableArrayList();
+		TriangularFuzzyNumber R = new TriangularFuzzyNumber(0.0,0.0,0.0);
+			ObservableList<TriangularFuzzyNumber> R1 = FXCollections.observableArrayList();
+			ObservableList<TriangularFuzzyNumber> wg = FXCollections.observableArrayList();
 			wg = W;
-			wg.set(critnumber, newValue);
+			wg.set(critnumber, w);
 			System.out.println(wg.size()+" size");	
 			System.out.println(wg.toString()+" size");
+			FuzzyOp Fop = new FuzzyOp();
 			for(int j  = 0; j < wg.size(); j++) {
-				R1.add(wg.get(j)*((star.get(j) - Double.valueOf(d.get(c).get(j)))/(star.get(j) - minus.get(j))));
-				System.out.println(d.get(c).get(j)+" d.get(c).get(j) from vikor");
+				R1.add((Fop .Multyply(W.get(j),D.get(c).get(j))));
 			}
-			
-		R = Collections.max(R1);
-		System.out.println(R+" r from vikor");	
-		System.out.println(newValue+" newValue from vikor");
+			R = (R1.get(Fop.MAX_Centroid(R1)));
 		return R;
-	}/*/
+	}
 	public ObservableList<Double> VikorV(double v) {
 		ObservableList<Double> qq = FXCollections.observableArrayList(); 
 		for(int i  = 0; i < S.size(); i++) {

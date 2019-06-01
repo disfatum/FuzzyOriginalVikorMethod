@@ -76,7 +76,6 @@ public class QvFuzzyController {
     	ObservableList<String> Mnames = FXCollections.observableArrayList();
     	Mnames.addAll("Центроид","Медиана","Больший Максимум");
     	MethodBox.setItems(Mnames);
-    	MethodBox.setValue(Mnames.get(0));
     	
     	  Rminus = 0.0;
 		  Sminus = 0.0;
