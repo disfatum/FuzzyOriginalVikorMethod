@@ -22,7 +22,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
-
+/**
+ * @author disfatum
+ * @mail disfatum@yandex.ru
+ * @github https://github.com/disfatum
+ *
+ */
 public class SRwController {
 
 	@FXML

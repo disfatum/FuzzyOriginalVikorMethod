@@ -52,7 +52,12 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
+/**
+ * @author disfatum
+ * @mail disfatum@yandex.ru
+ * @github https://github.com/disfatum
+ *
+ */
 public class VikorController {
 
     @FXML

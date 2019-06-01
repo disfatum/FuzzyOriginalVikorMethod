@@ -14,7 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SettingsController {
-
+	/**
+	 * @author disfatum
+	 * @mail disfatum@yandex.ru
+	 * @github https://github.com/disfatum
+	 *
+	 */
     @FXML
     private ResourceBundle resources;
 

@@ -18,6 +18,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * @author disfatum
+ * @mail disfatum@yandex.ru
+ * @github https://github.com/disfatum
+ *
+ */
 public class CalculateController {
 
 	    @FXML

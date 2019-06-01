@@ -21,7 +21,12 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-
+/**
+ * @author disfatum
+ * @mail disfatum@yandex.ru
+ * @github https://github.com/disfatum
+ *
+ */
 public class ValuePathController {
 
     @FXML

@@ -18,7 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class DominationController {
-
+	/**
+	 * @author disfatum
+	 * @mail disfatum@yandex.ru
+	 * @github https://github.com/disfatum
+	 *
+	 */
     @FXML
     private ResourceBundle resources;
 

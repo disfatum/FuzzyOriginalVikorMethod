@@ -5,7 +5,12 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-
+/**
+ * @author disfatum
+ * @mail disfatum@yandex.ru
+ * @github https://github.com/disfatum
+ *
+ */
 public class Alerts {
 
 	public void ErrorData() {

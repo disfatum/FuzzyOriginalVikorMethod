@@ -1,5 +1,10 @@
 package org.vikor.Controllers;
-
+/**
+ * @author disfatum
+ * @mail disfatum@yandex.ru
+ * @github https://github.com/disfatum
+ *
+ */
 import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;

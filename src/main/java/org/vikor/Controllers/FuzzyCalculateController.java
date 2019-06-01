@@ -26,7 +26,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 
 public class FuzzyCalculateController {
-
+	/**
+	 * @author disfatum
+	 * @mail disfatum@yandex.ru
+	 * @github https://github.com/disfatum
+	 *
+	 */
     @FXML
     private ResourceBundle resources;
 

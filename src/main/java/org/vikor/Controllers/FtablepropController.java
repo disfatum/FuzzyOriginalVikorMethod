@@ -15,7 +15,12 @@ import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 public class FtablepropController {
-
+	/**
+	 * @author disfatum
+	 * @mail disfatum@yandex.ru
+	 * @github https://github.com/disfatum
+	 *
+	 */
     @FXML
     private ResourceBundle resources;
 
