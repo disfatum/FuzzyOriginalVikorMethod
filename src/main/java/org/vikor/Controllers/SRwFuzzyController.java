@@ -67,7 +67,7 @@ public class SRwFuzzyController {
     private TextArea TextAreaR;
 
     @FXML
-    private LineChart<Number, Number> ChartR;
+    private AreaChart<Number, Number> ChartR;
 
     @FXML
     private Slider SliderR;
