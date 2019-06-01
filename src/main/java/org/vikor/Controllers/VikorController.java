@@ -500,6 +500,9 @@ public class VikorController {
                 fileChooser.getExtensionFilters().add(extFilter);
                 OpenProject op  = new OpenProject();
                 //Show save file dialog
+                String currentDir = System.getProperty("user.dir") + File.separator;
+                File file1 = new File(currentDir);
+                fileChooser.setInitialDirectory(file1);
                 File file = fileChooser.showOpenDialog((Stage) VPButton.getScene().getWindow());
                 if(file != null){
                 	try {
@@ -526,7 +529,10 @@ public class VikorController {
                 fileChooser.getExtensionFilters().add(extFilter);
                 SaveProject op  = new SaveProject();
                 //Show save file dialog
-                File file = fileChooser.showOpenDialog((Stage) VPButton.getScene().getWindow());
+                String currentDir = System.getProperty("user.dir") + File.separator;
+                File file1 = new File(currentDir);
+                fileChooser.setInitialDirectory(file1);
+                File file = fileChooser.showSaveDialog((Stage) VPButton.getScene().getWindow());
                 if(file != null){
                 	//try {
 						op.Save(file+"", Settings,FTableData,PTableData,ClassicFuzzyBox,Ptable,Ftable);
