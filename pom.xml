@@ -3,6 +3,12 @@
   <groupId>org</groupId>
   <artifactId>vikor</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+   <organization>
+  	<name>NRNU</name>
+  </organization>
+  <packaging>jar</packaging>
+  <name>vikormethod</name>
+  <url>http://maven.apache.org</url>
   
   <build>
     <plugins>
@@ -14,6 +20,40 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+    			<groupId>com.zenjava</groupId>
+    				<artifactId>javafx-maven-plugin</artifactId>
+    					<version>8.8.3</version>
+    					<configuration>
+       					<mainClass>org.vikor.Views.Vikor</mainClass>
+        				<verbose>true</verbose>
+        				<appName>VIKOR</appName>
+        			<bundleArguments>
+            		<!-- to include "dtjava.js" and other related files, set this to TRUE -->
+            			<jnlp.includeDT>true</jnlp.includeDT>
+			            <!-- the JNLP-bundler needs this, they don't use "appName" for the filename ... you have to set this, otherwise it doesn't build -->
+			            <!-- for details of that JNLP-bundler, please have a look at the source -->
+			            <!-- https://github.com/Debian/openjfx/blob/e32fd960e20c58c9b7db27e426b4bca6d52add2f/modules/fxpackager/src/main/java/com/oracle/tools/packager/jnlp/JNLPBundler.java#L84 -->
+            			<jnlp.outfile>VIKOR</jnlp.outfile>
+        			</bundleArguments>
+   				 	</configuration>
+    					<executions>
+        					<execution>
+					            <id>create-jfxjar</id>
+					            <phase>package</phase>
+					            <goals>
+					                <goal>build-jar</goal>
+					            </goals>
+					        </execution>
+				        	<execution>
+				              <id>create-native</id>
+				              <phase>package</phase>
+				               <goals>
+				                 <goal>build-native</goal>
+				               </goals>
+				         	</execution>
+    				</executions>
+			</plugin>
     </plugins>
   </build>
   <dependencies>

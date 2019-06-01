@@ -3,14 +3,11 @@ package org.vikor.Controllers;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.vikor.DataStructure.Settings;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 import org.vikor.FuzzyOperations.FuzzyOp;
-import org.vikor.Methods.ClassicVikor;
 import org.vikor.Methods.FuzzyVikorCentroid;
 
 import javafx.beans.value.ChangeListener;
@@ -210,24 +207,18 @@ public class SRwFuzzyController {
         
        OkButton.setOnAction(e->{
     	   
-    	   Settings f = VikorController.Settings;
-          // for(int j = 0; j < Controller.list.size(); j++) {
            	w.clear();
            	w2.clear();
            	ww.clear();
-           	int j = critn.indexOf(ComboBox.getValue());
-           	int k = 0;
            	for(int i = 0; i < VikorController.FTableData.size(); i++) {
            		TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(1.0,1.0,1.0);
            		tfn.RefreshData( VikorController.FTableData.get(i).getWeigh());
            		w.add(tfn);
-           		k++;
            	}
            	  lol = critn.indexOf(ComboBox.getValue());
      	   
     	     tc = w.get(lol).getCenter() - w.get(lol).getLeft();
     	     tf = w.get(lol).getRight() - w.get(lol).getLeft();
-    	    double d = w.get(lol).getRight() - w.get(lol).getCenter();
            //	xAxisS.setUpperBound(1.3);
        	   // xAxisS.setLowerBound(-0.3);
            SliderS.setValue(w.get(critn.indexOf(ComboBox.getValue())).getCenter());
@@ -235,7 +226,6 @@ public class SRwFuzzyController {
            	w2 = w1;
            	System.out.println(tc+ "tc");
         	System.out.println(tf+ "tf");
-         //  }   
         
        }); 
     }

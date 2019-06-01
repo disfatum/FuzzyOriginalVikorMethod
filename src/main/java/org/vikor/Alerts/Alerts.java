@@ -50,8 +50,15 @@ public class Alerts {
 		}
 	  public void success() {
 		  Alert alert = new Alert(AlertType.INFORMATION);
-	        alert.setHeaderText("Успешно выполнено:");
+	        alert.setHeaderText("Сохранение успешно:");
 	        alert.setContentText("Файл сохранен");
+	 
+	        alert.showAndWait();
+	  }
+	  public void successfile() {
+		  Alert alert = new Alert(AlertType.INFORMATION);
+	        alert.setHeaderText("Открытие успешно:");
+	        alert.setContentText("Файл открыт");
 	 
 	        alert.showAndWait();
 	  }

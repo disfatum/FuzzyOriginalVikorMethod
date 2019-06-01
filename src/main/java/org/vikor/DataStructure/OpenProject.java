@@ -3,7 +3,6 @@ package org.vikor.DataStructure;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.vikor.Alerts.Alerts;
@@ -45,11 +44,10 @@ public class OpenProject {
 			ObservableList<String> colnames = FXCollections.observableArrayList();
         String mode = "";
 
-         int counter = 0; int mods = 0;
+         //int counter = 0; int mods = 0;
          while ((strLine = br1.readLine()) != null) {
         	 String[] arr = strLine.split("=");
              if(arr[0].equals("MODE")) {
-             	mods = 1;
              	if(arr[1].equals("Classic VIKOR")) {
              		classicFuzzyBox.setValue("Classic VIKOR");
              	}
@@ -146,7 +144,6 @@ public class OpenProject {
             
             else if(settings.getSynchronization().equals("ÕÂÚ")) {///////ƒŒƒ≈À¿“‹!!!!!!!!!1
             	 if(arr[0].equals("FFUZZY")) {
-            		 counter++;
  	            	String[] ftable = arr[1].split("-");
  	            	List<String> cols = FXCollections.observableArrayList();
  	            	for(int i = 0; i < ftable.length ;i++) {
@@ -171,7 +168,6 @@ public class OpenProject {
  		            
  	            }
  	            if(arr[0].equals("FCLASSIC")) {
- 	            	counter++;
  	            		String[] ftable = arr[1].split("-");
  	            		List<String> cols = FXCollections.observableArrayList();
  		            	for(int i = 0; i < ftable.length ;i++) {
@@ -196,7 +192,6 @@ public class OpenProject {
  	            	
  	            }
  	            if(arr[0].equals("PCLASSIC")) {
- 	            	counter++;
  		            	String[] ptabledat = arr[1].split("-");
  		            	
  		            	for(int i = 0; i < ptabledat.length ;i++) {
@@ -219,7 +214,6 @@ public class OpenProject {
  		            	
  	            }
  	            if(arr[0].equals("PFUZZY")) {
- 	            	counter++;
  		            	String[] ptabledat = arr[1].split("-");
  		            	
  		            	for(int i = 0; i < ptabledat.length ;i++) {
@@ -276,9 +270,11 @@ public class OpenProject {
         ptable.refresh();
         ftable2.refresh();
         br.close();
+        Alerts alert = new Alerts();
+        alert.successfile();
 		}
     	catch(Exception ex) {
-    		Alerts alert = new Alerts();;
+    		Alerts alert = new Alerts();
 			alert .Erroropen();
     	}
     }

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 import org.vikor.DataStructure.TriangularFuzzyNumber;
-import org.vikor.Methods.ClassicVikor;
 import org.vikor.Methods.FuzzyVikorCentroid;
 import org.vikor.Methods.FuzzyVikorMax;
 import org.vikor.Methods.FuzzyVikorMediana;

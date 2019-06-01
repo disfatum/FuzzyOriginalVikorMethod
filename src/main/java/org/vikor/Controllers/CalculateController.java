@@ -1,6 +1,7 @@
 package org.vikor.Controllers;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import org.vikor.DataStructure.VikorTableData;
 import org.vikor.Methods.ClassicVikor;
@@ -94,6 +95,23 @@ public class CalculateController {
 	    		BarChart.getData().add(alt1);
 	    	}
 	    	 
+	    	ObservableList<Double> Qsort = FXCollections.observableArrayList();
+	    	Qsort = Q;
+	    	Collections.sort(Qsort);
+	    	Double Dq = 1.0 / (Qsort.size() - 1.0);
 	    	
+	    	if((Qsort.get(1) - Qsort.get(0)) >= Dq) {
+	    		c1.setText(c1.getText() + "Выполняется");
+	    	}
+	    	else {
+	    		c1.setText(c1.getText() + "Не выполняется");
+	    	}
+	    	
+	    	if((Qsort.get(Qsort.size()-1) - Qsort.get(0)) < Dq) {
+	    		c2.setText(c2.getText() + "Выполняется");
+	    	}
+	    	else {
+	    		c2.setText(c2.getText() + "Не выполняется");
+	    	}
 	    }
 	}
