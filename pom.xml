@@ -29,6 +29,7 @@
         				<verbose>true</verbose>
         				<appName>VIKOR</appName>
         			<bundleArguments>
+        			     <installdirChooser>true</installdirChooser>
             		<!-- to include "dtjava.js" and other related files, set this to TRUE -->
             			<jnlp.includeDT>true</jnlp.includeDT>
 			            <!-- the JNLP-bundler needs this, they don't use "appName" for the filename ... you have to set this, otherwise it doesn't build -->
