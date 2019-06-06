@@ -69,11 +69,15 @@ public class FuzzyCalculateController {
     private Button Button;
 
     ObservableList<String> alt = FXCollections.observableArrayList();
-    
+    ObservableList<VikorTableData> Data =  FXCollections.observableArrayList();
+    ObservableList<String> l = FXCollections.observableArrayList();
     @FXML
     void initialize() {
     	//FuzzyVikorCentroid t = VikorController.Cindex;
-    	
+    	l.add("Центр масс");l.add("Медиана");l.add("Наибольший максимум");
+   	 	ComboBox.setItems(l);
+   	 	ComboBox.setValue(l.get(0));
+   	 
     	FuzzyVikorCentroid Cindex = VikorController.Cindex;
         FuzzyVikorMediana Mediana = VikorController.Mediana;
         FuzzyVikorMax LargeMax = VikorController.LargeMax;
@@ -115,12 +119,32 @@ public class FuzzyCalculateController {
     	 });
     	 
     	 
-    	 ObservableList<String> l = FXCollections.observableArrayList();
-    	 l.add("Центр масс");l.add("Медиана");l.add("Наибольший максимум");
-    	 ComboBox.setItems(l);
-    	 ComboBox.setValue(l.get(0));
 
     	 Button.setOnAction(e->{
+    		 Data.clear();
+    		 for(int i = 0; i < VikorController.PTableData.size();i++) {
+    	    		if(ComboBox.getValue().equals(l.get(0))) {
+    			    	VikorTableData l = new VikorTableData(VikorController.PTableData.get(i).get(0),
+    					VikorController.Cindex.S.get(i).DefazzyCentriod(),
+    					VikorController.Cindex.R.get(i).DefazzyCentriod(),
+    					VikorController.Cindex.Q1.get(i));
+    			    		Data.add(l);
+    		    	}
+    	    		if(ComboBox.getValue().equals(l.get(1))) {
+    			    	VikorTableData l = new VikorTableData(VikorController.PTableData.get(i).get(0),
+    					VikorController.Mediana.S.get(i).DefazzyCentriod(),
+    					VikorController.Mediana.R.get(i).DefazzyCentriod(),
+    					VikorController.Mediana.Q1.get(i));
+    			    		Data.add(l);
+    		    	}
+    	    		if(ComboBox.getValue().equals(l.get(2))) {
+    			    	VikorTableData l = new VikorTableData(VikorController.PTableData.get(i).get(0),
+    					VikorController.LargeMax.S.get(i).DefazzyCentriod(),
+    					VikorController.LargeMax.R.get(i).DefazzyCentriod(),
+    					VikorController.LargeMax.Q1.get(i));
+    			    		Data.add(l);
+    		    	}
+    	    	}
     		 BarChart.getData().clear();
     		 if(ComboBox.getValue().equals(l.get(0))) {
     			 alt = Cindex.AltNames;
@@ -169,14 +193,16 @@ public class FuzzyCalculateController {
     	TableColumn<VikorTableData,Double> q = new TableColumn<VikorTableData,Double>("Q");
     	q.setCellValueFactory(new PropertyValueFactory<VikorTableData, Double>("Q"));
     	
-    	ObservableList<VikorTableData> Data =  FXCollections.observableArrayList();
+    	
+    	
     	
     	for(int i = 0; i < VikorController.PTableData.size();i++) {
-    	VikorTableData l = new VikorTableData(VikorController.PTableData.get(i).get(0),
-		VikorController.Cindex.S.get(i).DefazzyCentriod(),
-		VikorController.Cindex.R.get(i).DefazzyCentriod(),
-		VikorController.Cindex.Q1.get(i));
-    		Data.add(l);
+		    	VikorTableData l = new VikorTableData(VikorController.PTableData.get(i).get(0),
+				VikorController.Cindex.S.get(i).DefazzyCentriod(),
+				VikorController.Cindex.R.get(i).DefazzyCentriod(),
+				VikorController.Cindex.Q1.get(i));
+		    		Data.add(l);
+	    	
     	}
     	
     	Table.getColumns().add(alte);

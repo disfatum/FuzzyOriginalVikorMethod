@@ -2,7 +2,6 @@ package org.vikor.Events;
 
 import org.vikor.Controllers.VikorController;
 import org.vikor.DataStructure.OriginalCriterionDataStructure;
-import org.vikor.DataStructure.OriginalPtableData;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 
 import com.jfoenix.controls.JFXPopup;
@@ -11,12 +10,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.paint.Color;
 
 public class FtableEvent {
 	

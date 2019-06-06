@@ -1,5 +1,7 @@
 package org.vikor.Controllers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -150,9 +152,12 @@ public class QvController {
 			        //xAxis.setTickLabelsVisible(true);
 			        Chart.setData(chartData);
             		int c = 0;
-            		TextArea.appendText("при V = "+newValue+"\n");
+            		double value = (Double) newValue; 
+            		value = new BigDecimal(value).setScale(3, RoundingMode.UP).doubleValue();
+            		TextArea.appendText("при V = "+value+"\n");
             		do {
-            			TextArea.appendText(String.valueOf(a.get(c))+" = "+String.valueOf(qq1.get(c))+"\n");
+            			double buf = new BigDecimal(qq1.get(c)).setScale(3, RoundingMode.UP).doubleValue();
+            			TextArea.appendText(String.valueOf(a.get(c))+" = "+String.valueOf(buf)+"\n");
             			
             			c++;
             		}while(c != qq1.size());

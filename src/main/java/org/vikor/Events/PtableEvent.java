@@ -1,28 +1,22 @@
 package org.vikor.Events;
 
-import org.vikor.DataStructure.VerifiableValue;
 import org.vikor.Controllers.VikorController;
-import org.vikor.DataStructure.OriginalCriterionDataStructure;
 import org.vikor.DataStructure.OriginalPtableData;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 
 import com.jfoenix.controls.JFXPopup;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class PtableEvent {

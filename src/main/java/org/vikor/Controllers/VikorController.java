@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXPopup;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,7 +53,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Callback;
 /**
  * @author disfatum
@@ -180,19 +181,31 @@ public class VikorController {
 	   				
 	   				for(int i = 0; i < PTableData.size();i++) {
 	   					for(int j = 0 ; j < PTableData.get(0).size()-1;j++) {
-	   						
+	   						double left = Double.valueOf(PTableData.get(i).get(j+1))*0.9;
+	   					    left = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+	   					    double center = Double.valueOf(PTableData.get(i).get(j+1));
+	   					    center = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+	   					    double right = Double.valueOf(PTableData.get(i).get(j+1))*1.1;
+	   					    right = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
 	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(
-	   								Double.valueOf(PTableData.get(i).get(j+1))*0.9,
-	   								Double.valueOf(PTableData.get(i).get(j+1)),
-	   								Double.valueOf(PTableData.get(i).get(j+1))*1.1);
+	   								left,
+	   								center,
+	   								right);
 	   						PTableData.get(i).setinlist(j+1,tfn.DataforTable());
 	   					
 	   					}
 	   				}
 	   				for(int i = 0; i < FTableData.size();i++) {
-	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(
-	   								Double.valueOf(FTableData.get(i).getWeigh())*0.9,Double.valueOf(FTableData.get(i).getWeigh()),
-	   								Double.valueOf(FTableData.get(i).getWeigh())*1.1);
+	   					double left = Double.valueOf(FTableData.get(i).getWeigh())*0.9;
+   					    left = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+   					    double center = Double.valueOf(FTableData.get(i).getWeigh());
+   					    center = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+   					    double right = Double.valueOf(FTableData.get(i).getWeigh())*1.1;
+   					    right = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(
+   								left,
+   								center,
+   								right);
 	   						FTableData.get(i).setWeigh(tfn.DataforTable());
 	   				}
 	   				Ftable.refresh();

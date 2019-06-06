@@ -1,5 +1,7 @@
 package org.vikor.Methods;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.vikor.Controllers.VikorController;
@@ -183,6 +185,7 @@ public class FuzzyVikorCentroid {
 		for(int i  = 0; i < PTableData.size(); i++) {
 			Double q = (V.getCenter() * (S.get(i).DefazzyCentriod() - Sstar.DefazzyCentriod()) / (Sminus.DefazzyCentriod() - Sstar.DefazzyCentriod()))+((1 - V.DefazzyCentriod()) * 
 					(R.get(i).DefazzyCentriod() - Rstar.DefazzyCentriod())/(Rminus.DefazzyCentriod() - Rstar.DefazzyCentriod()));
+			q = new BigDecimal(q).setScale(3, RoundingMode.UP).doubleValue();
 			qq.add(q);
 		}
 		
@@ -247,8 +250,10 @@ public class FuzzyVikorCentroid {
 		ObservableList<Double> qq = FXCollections.observableArrayList(); 
 		for(int i  = 0; i < S.size(); i++) {
 			Double q = (v * (S.get(i).DefazzyCentriod() - Sstar1) / (Sminus1 - Sstar1))+((1 - v) * (R.get(i).DefazzyCentriod() - Rstar1)/(Rminus1 - Rstar1));
+			q = new BigDecimal(q).setScale(3, RoundingMode.UP).doubleValue();
 			qq.add(q);
 		}
+		
 		return qq;
 	}
 	public ObservableList<String> altname(){

@@ -1,5 +1,7 @@
 package org.vikor.Methods;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -130,6 +132,7 @@ public class ClassicVikor {
 						R_buf.add(VikorR(W.get(j), i,j));
 					}
 					R.add(Collections.max(R_buf));
+					e = new BigDecimal(e).setScale(3, RoundingMode.UP).doubleValue();
 					S.add(e);
 				}
 				System.out.println(R.toString()+"-R");
@@ -144,6 +147,7 @@ public class ClassicVikor {
 		 */
 				for(int i  = 0; i < PTableData.size(); i++) {
 					Double q = (V * (S.get(i) - Sstar) / (Sminus - Sstar))+((1 - V) * (R.get(i) - Rstar)/(Rminus - Rstar));
+					 q = new BigDecimal(q).setScale(3, RoundingMode.UP).doubleValue();
 					Q.add(q);
 				}
 				System.out.println(Q.toString()+" Q");
@@ -196,7 +200,7 @@ public class ClassicVikor {
 					for(int j  = 0; j < wg.size(); j++) {
 						S = S + wg.get(j)*((star.get(j) - Double.valueOf(d.get(c).get(j)))/(star.get(j) - minus.get(j)));	
 					}
-				
+		        S = new BigDecimal(S).setScale(3, RoundingMode.UP).doubleValue();
 				return S;
 			}
 			public Double VikorR(double newValue,int c, int critnumber){
@@ -214,8 +218,7 @@ public class ClassicVikor {
 					}
 					
 				R = Collections.max(R1);
-				System.out.println(R+" r from vikor");	
-				System.out.println(newValue+" newValue from vikor");
+				R = new BigDecimal(R).setScale(3, RoundingMode.UP).doubleValue();
 				return R;
 			}
 }

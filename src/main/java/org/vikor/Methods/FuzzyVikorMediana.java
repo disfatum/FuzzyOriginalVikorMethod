@@ -1,5 +1,7 @@
 package org.vikor.Methods;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.vikor.Controllers.VikorController;
@@ -184,6 +186,7 @@ public class FuzzyVikorMediana {
 		for(int i  = 0; i < PTableData.size(); i++) {
 			Double q = (V.getCenter() * (S.get(i).DefuzzyMediana() - Sstar.DefuzzyMediana()) / (Sminus.DefuzzyMediana() - Sstar.DefuzzyMediana()))+((1 - V.DefazzyCentriod()) * 
 					(R.get(i).DefuzzyMediana() - Rstar.DefuzzyMediana())/(Rminus.DefuzzyMediana() - Rstar.DefuzzyMediana()));
+			q = new BigDecimal(q).setScale(3, RoundingMode.UP).doubleValue();
 			qq.add(q);
 		}
 		for(int i  = 0; i < Q.size(); i++) {
@@ -212,6 +215,7 @@ public class FuzzyVikorMediana {
 		ObservableList<Double> qq = FXCollections.observableArrayList(); 
 		for(int i  = 0; i < S.size(); i++) {
 			Double q = (v * (S.get(i).DefuzzyMediana() - Sstar1) / (Sminus1 - Sstar1))+((1 - v) * (R.get(i).DefuzzyMediana() - Rstar1)/(Rminus1 - Rstar1));
+			q = new BigDecimal(q).setScale(3, RoundingMode.UP).doubleValue();
 			qq.add(q);
 		}
 		return qq;

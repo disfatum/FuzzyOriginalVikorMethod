@@ -1,5 +1,7 @@
 package org.vikor.Controllers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -139,7 +141,9 @@ public class SRwController {
                 
                 TextAreaS.appendText("при w="+newValue+"\n");
                 for(int i =0; i < alt.size();i++) {
-                	TextAreaS.appendText("S "+alt.get(i)+"="+t.VikorS((double)newValue, i,critn.indexOf(ComboBox.getValue()))+"\n");
+                	double s = t.VikorS(Double.valueOf(newValue.toString()), i,critn.indexOf(ComboBox.getValue()));
+                	s = new BigDecimal(s).setScale(3, RoundingMode.UP).doubleValue();
+                	TextAreaS.appendText("S "+alt.get(i)+"="+s+"\n");
                 }
             }
        });
@@ -182,7 +186,9 @@ public class SRwController {
                 
                 TextAreaR.appendText("при w="+newValue+"\n");
                 for(int i =0; i < alt.size();i++) {
-                	TextAreaR.appendText("R "+alt.get(i)+"="+t.VikorR(Double.valueOf(newValue.toString()), i,critn.indexOf(ComboBox.getValue()))+"\n");
+                	double r = t.VikorR(Double.valueOf(newValue.toString()), i,critn.indexOf(ComboBox.getValue()));
+                	r = new BigDecimal(r).setScale(3, RoundingMode.UP).doubleValue();
+                	TextAreaR.appendText("R "+alt.get(i)+"="+r+"\n");
                 }
             }
             

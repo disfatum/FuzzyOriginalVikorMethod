@@ -138,13 +138,16 @@ public class PtablepropController {
 	    	    			if( i > 0) {
 	    	    				tfn.Name = TfList.get(0).getText();
 	    	    				tfn.RefreshData(TfList.get(i).getText());
-	    	    				VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).add(tfn);
+	    	    				VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).set(i-1, tfn);
 	    	    			}
-	    	    			VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).set(i, tfn);
+	    	    			//VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).set(i, tfn);
 	    				}
 	    				else {
 	    					VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
-	    					VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i, TfList.get(i).getText());
+	    					
+	    					if(i > 0) {
+			    				 VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i-1, TfList.get(i).getText());
+		    				}
 	    				}
 		    			
 	    			}
@@ -156,13 +159,16 @@ public class PtablepropController {
 	    	    			if( i > 0) {
 	    	    				tfn.Name = TfList.get(0).getText();
 	    	    				tfn.RefreshData(TfList.get(i).getText());
-	    	    				VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).add(tfn);
+	    	    				VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).set(i-1, tfn);
 	    	    			}
 	    	    			VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
 	    				}
 	    				else {
 	    					VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
-	    					VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i, TfList.get(i).getText());
+	    					if(i > 0) {
+	    						
+		    				  VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i-1, TfList.get(i).getText());
+	    					}
 	    				}
 	    				
 	    			}
@@ -176,7 +182,7 @@ public class PtablepropController {
     			
     			 Alerts alert = new Alerts();
     			 alert.ErrorData();
-    			//ex.printStackTrace();
+    			ex.printStackTrace();
     		}
     	});
     	b2.setOnAction(e->{
