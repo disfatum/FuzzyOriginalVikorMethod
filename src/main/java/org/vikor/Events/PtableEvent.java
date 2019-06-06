@@ -1,20 +1,28 @@
 package org.vikor.Events;
 
+import org.vikor.DataStructure.VerifiableValue;
 import org.vikor.Controllers.VikorController;
+import org.vikor.DataStructure.OriginalCriterionDataStructure;
 import org.vikor.DataStructure.OriginalPtableData;
 import org.vikor.DataStructure.TriangularFuzzyNumber;
 
 import com.jfoenix.controls.JFXPopup;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class PtableEvent {
@@ -22,8 +30,8 @@ public class PtableEvent {
 	public void AddCol(
 			String NAME, // название критерия
 			ObservableList<OriginalPtableData> PTableData,
-			TableView<OriginalPtableData> Ptable
-    		) {
+			TableView<OriginalPtableData> Ptable,
+			ComboBox<String> classicFuzzyBox) {
 		for(int i = 0; i < PTableData.size();i++) {
 		   if(VikorController.Settings.getSynchronization().equals("Да")) {
 				if(VikorController.f == true) {
@@ -56,6 +64,37 @@ public class PtableEvent {
 		//col.setCellValueFactory(new PropertyValueFactory<>(NAME));
 		//col.setText(NAME);
 		col.sortableProperty().set(false);
+		col.setCellFactory(column -> {
+		    return new TableCell<OriginalPtableData, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		               // setText(null);
+		               /// setStyle("");
+		            } else {
+		                // Style all dates in March with a different color.
+		            	 try {
+ 		                	if(classicFuzzyBox.getValue().equals("Classic VIKOR")) {
+	    		                	Double.valueOf(item);
+	    		                	this.setText(item);
+ 		                	}
+ 		                	else {
+ 		                		TriangularFuzzyNumber tfn  = new TriangularFuzzyNumber(1.0,1.0,1.0);
+		                			tfn.RefreshData(item);
+		                			this.setText(item);
+ 		                	}
+ 		                	//setStyle("");
+ 		                    //setStyle("-fx-background-color: yellow");
+ 		                } catch(Exception ex) {
+ 		                	this.setText(item);
+ 		                	this.setStyle("-fx-background-color: yellow");
+ 		                }
+		            }
+		        }
+		    };
+		});
 		col.setOnEditCommit((CellEditEvent<OriginalPtableData, String> event2) -> {
              
        		 TablePosition<OriginalPtableData, String> pos = event2.getTablePosition();
@@ -69,12 +108,22 @@ public class PtableEvent {
 			final int q = i;
 			col.setCellValueFactory(new Callback<CellDataFeatures<OriginalPtableData, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<OriginalPtableData, String> p) {
-		    	 
-		    	 return new ReadOnlyObjectWrapper<String>(p.getValue().getFromList(q));
-		    	 
+		    	 try {
+		    		 Double.valueOf(p.getValue().getFromList(q));
+		    		 return new ReadOnlyObjectWrapper<String>(p.getValue().getFromList(q));
+		    	 }
+		    	catch(Exception ex) {
+		    		//p.getValue().setinlist(q, "Ошибка данных");
+		    		
+		    		return new ReadOnlyObjectWrapper<String>(p.getValue().getFromList(q));
+		    	}
 		     }
+		     
 		  });	
+			
 		}
+		
+		
 		if(VikorController.f == true) {
 			VikorController.FuzzyPTableDataColumns.add(col);
 		}

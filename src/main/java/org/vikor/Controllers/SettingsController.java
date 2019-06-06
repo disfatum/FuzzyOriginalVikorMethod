@@ -63,7 +63,7 @@ public class SettingsController {
     	ObservableList<String> l = FXCollections.observableArrayList();
 		l.add("Да");l.add("Нет");
 		Synh_combo.setItems(l);
-		Synh_combo.setValue(l.get(0));
+		Synh_combo.setValue(VikorController.Settings.getSynchronization());
 		
     	CencelButton.setOnAction(e->{
     		 try {

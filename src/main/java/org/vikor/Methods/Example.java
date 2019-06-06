@@ -11,8 +11,9 @@ public class Example {
         System.out.println("Template double: " + templateDouble);
         
          templateDouble = new BigDecimal(templateDouble).setScale(3, RoundingMode.UP).doubleValue();
-        
-        System.out.println("New double: " + templateDouble);
+        String s = " 1";
+        double s1 = Double.valueOf(s);
+        System.out.println("New double: " + templateDouble+" "+s1);
         
     }
     

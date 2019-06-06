@@ -17,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableView;
@@ -30,7 +31,8 @@ public class PopupEvent {
 	public void Faddnames(JFXPopup Fnamepop,
 			TableView<OriginalPtableData> Ptable,
 			PtableEvent p,
-			ObservableList<OriginalPtableData> PTableData) {
+			ObservableList<OriginalPtableData> PTableData,
+			ComboBox<String> ClassicFuzzyBox) {
 		
     	Label l = new Label("Введите название критерия:");
     	l.alignmentProperty().set(Pos.CENTER);
@@ -61,7 +63,7 @@ public class PopupEvent {
 					VikorController.FTableData.add(l2);
 				}
 			}
-    		p.AddCol(b1.getText(), PTableData, Ptable);
+    		p.AddCol(b1.getText(), PTableData, Ptable, ClassicFuzzyBox);
     		
     	});
     	VBox vb = new VBox(l,b1,b2);
@@ -177,7 +179,8 @@ public class PopupEvent {
 			PtableEvent PtableEvents,
 			PopupEvent pope,
 			TableView<OriginalPtableData> Ptable,
-			ObservableList<OriginalPtableData> PTableData) {
+			ObservableList<OriginalPtableData> PTableData,
+			ComboBox<String> ClassicFuzzyBox) {
 		Label l = new Label("Введите название критерия:");
     	l.alignmentProperty().set(Pos.CENTER);
     	JFXTextField b1 = new JFXTextField();
@@ -189,7 +192,7 @@ public class PopupEvent {
     	
     	b2.setOnMouseClicked(e->{
     		if(e.getClickCount() == 1 && e.getButton().equals(MouseButton.PRIMARY)) {
-    			PtableEvents.AddCol(b1.getText(), PTableData, Ptable);
+    			PtableEvents.AddCol(b1.getText(), PTableData, Ptable, ClassicFuzzyBox);
     			VikorController.Colnames.add(b1.getText());
     			if(VikorController.Settings.getSynchronization().equals("Да")) {
 	    			OriginalCriterionDataStructure l1 = new OriginalCriterionDataStructure(b1.getText(),"","1","Максимизация");

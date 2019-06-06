@@ -51,6 +51,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Callback;
 /**
  * @author disfatum
@@ -153,7 +154,7 @@ public class VikorController {
 	public static int pindexPropCol;
    	boolean bx = true;
    	public static boolean f = false;
-   	
+   	OpenProject op;
    	public static Settings Settings = new Settings("Да","0.5",10,10,0.01,0.01);
    	Alerts alert = new Alerts();
    	
@@ -162,7 +163,7 @@ public class VikorController {
    		InitMethodBox init = new InitMethodBox();
    		init.init(ClassicFuzzyBox);
    		firstenter();
-   		
+   	 
    	ClassicFuzzyBox.addEventHandler(Event.ANY, e->{
    	try {		
    		  if(Settings.getSynchronization().equals("Да")  ) {
@@ -244,7 +245,11 @@ public class VikorController {
 	   				PTableData.clear();
 	   				FTableData.clear();
 	   				Ptable.getColumns().clear();
-	   				//AltNameCol();
+	   				System.out.println(OpenProject.open+" open");
+	   				if(OpenProject.open == false) {
+	   				
+		   				AltNameCol();
+	   				}
 
 	   				Ptable.getColumns().addAll(FuzzyPTableDataColumns);
 	   				for(int i = 0; i < FuzzyPTableData.size();i++) {
@@ -288,8 +293,10 @@ public class VikorController {
    				FTableData.clear();
    				PTableData.clear();
    				Ptable.getColumns().clear();
-   				//AltNameCol();
+   				if(OpenProject.open == false) {
 
+	   				AltNameCol();
+   				}
    				Ptable.getColumns().addAll(OriginalPTableDataColumns);
    				System.out.println("Classic version initialize");
    				for(int i = 0; i < OriginalPTableData.size();i++) {
@@ -317,7 +324,7 @@ public class VikorController {
    		}
    	}
    	catch(Exception ex) {
-   		alert.ErrorData();
+   		alert.fatal();
    }
    	});
    	
@@ -503,7 +510,7 @@ public class VikorController {
                 //Set extension filter
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VKR files (*.vkr)", "*.vkr");
                 fileChooser.getExtensionFilters().add(extFilter);
-                OpenProject op  = new OpenProject();
+                 op  = new OpenProject();
                 //Show save file dialog
                 String currentDir = System.getProperty("user.dir") + File.separator;
                 File file1 = new File(currentDir);
@@ -603,14 +610,14 @@ public class VikorController {
         
         PopupEvents.FSelectedRow(Ftablepop, Fnamepop, Ftable, FTableData, Ptable,PTableData);
         PopupEvents.FNotSelected(Ftablepopfirst, Fnamepop);
-        PopupEvents.Faddnames(Fnamepop,Ptable, PtableEvents, PTableData); 
+        PopupEvents.Faddnames(Fnamepop,Ptable, PtableEvents, PTableData, ClassicFuzzyBox); 
         
         PopupEvents.PAaddNames(PanamesPopup, PTableData, Ptable);
-        PopupEvents.PFaddNames(PfnamesPopup, PtableEvents, PopupEvents, Ptable, PTableData);
+        PopupEvents.PFaddNames(PfnamesPopup, PtableEvents, PopupEvents, Ptable, PTableData, ClassicFuzzyBox);
         PopupEvents.PSelected(PSelectedPopup, PfnamesPopup, PanamesPopup, Ptable, PTableData);
         PopupEvents.PNotSelected(PfirstPopup, PfnamesPopup, PanamesPopup);
         
-        FtableEvents.AddCols(Ftable, FTableData, PopupEvents, Ftablepop, Ftablepopfirst);
+        FtableEvents.AddCols(Ftable, FTableData, PopupEvents, Ftablepop, Ftablepopfirst, ClassicFuzzyBox);
         PtableEvents.addEvents(Ptable, PTableData, PopupEvents, PfirstPopup, PSelectedPopup);
         
         AltNameCol();

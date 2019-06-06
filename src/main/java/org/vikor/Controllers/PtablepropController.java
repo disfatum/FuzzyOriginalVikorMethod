@@ -87,6 +87,7 @@ public class PtablepropController {
     public void addHbox(VBox vb, int j) {
     	
     	Label l = new Label();
+    	System.out.println(c+" c");
     	l.setText(VikorController.Colnames.get(c));
     	TextField tx = new TextField();
     	TfList.add(tx);
@@ -125,18 +126,57 @@ public class PtablepropController {
     	HBox hb = new HBox(b1,b2);
     	
     	b1.setOnAction(e->{
-    		
     		try {
 	    		for(int i = 0 ; i < TfList.size();i++) {
-	    			VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
+	    			
+	    			
+	    			System.out.println(VikorController.Settings.getSynchronization()+" sets");
+	    			if(VikorController.Settings.getSynchronization().equals("Да")) {
+	    				if(VikorController.f == true) {
+	    	    			
+	    	    			TriangularFuzzyNumber tfn = new  TriangularFuzzyNumber(1.0,1.0,1.0);
+	    	    			if( i > 0) {
+	    	    				tfn.Name = TfList.get(0).getText();
+	    	    				tfn.RefreshData(TfList.get(i).getText());
+	    	    				VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).add(tfn);
+	    	    			}
+	    	    			VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).set(i, tfn);
+	    				}
+	    				else {
+	    					VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
+	    					VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i, TfList.get(i).getText());
+	    				}
+		    			
+	    			}
+	    			else {
+	    				if(VikorController.f == true) {
+	    	    			TriangularFuzzyNumber tfn = new  TriangularFuzzyNumber(1.0,1.0,1.0);
+	    	    			System.out.println(TfList.get(i).getText());
+    	    				//VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).set(0, tfn1);
+	    	    			if( i > 0) {
+	    	    				tfn.Name = TfList.get(0).getText();
+	    	    				tfn.RefreshData(TfList.get(i).getText());
+	    	    				VikorController.FuzzyPTableData.get(VikorController.pindexPropCol).add(tfn);
+	    	    			}
+	    	    			VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
+	    				}
+	    				else {
+	    					VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
+	    					VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i, TfList.get(i).getText());
+	    				}
+	    				
+	    			}
 	    			jb.fire();
 	    		}
+	    		
             	Stage ps;
     	    	ps  = (Stage) b2.getScene().getWindow();
     	    	ps.close();
-    		} catch (Exception e1) {
-    			  Alerts alert = new Alerts();
-    			  alert.ErrorData();
+    		} catch (Exception ex) {
+    			
+    			 Alerts alert = new Alerts();
+    			 alert.ErrorData();
+    			//ex.printStackTrace();
     		}
     	});
     	b2.setOnAction(e->{

@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -22,7 +23,8 @@ import javafx.util.Callback;
 
 
 public class OpenProject {
-	
+	static String mode = " ";
+	public static boolean open = false;
 	public void  getDat(String name,Settings settings, 
 			ObservableList<OriginalCriterionDataStructure> fTableData,
 			ObservableList<OriginalPtableData> pTableData,
@@ -33,6 +35,13 @@ public class OpenProject {
     	//List<ThemeFull> dat = new ArrayList<ThemeFull>();
 		pTableData.clear();
 		fTableData.clear();
+		VikorController.OriginalPTableData.clear();
+		VikorController.FuzzyPTableData.clear();
+		VikorController.OriginalFTableData.clear();
+		VikorController.FuzzyFTableData.clear();
+		VikorController.FuzzyPTableDataColumns.clear();
+		VikorController.OriginalPTableDataColumns.clear();
+		//VikorController.Settings.
 		ptable.getColumns().clear();
         String strLine;
         BufferedReader br;
@@ -42,7 +51,7 @@ public class OpenProject {
 			
 			br1 = new BufferedReader(new FileReader(name));
 			ObservableList<String> colnames = FXCollections.observableArrayList();
-        String mode = "";
+        //String mode = "";
 
          //int counter = 0; int mods = 0;
          while ((strLine = br1.readLine()) != null) {
@@ -56,20 +65,22 @@ public class OpenProject {
              	}
              	mode = arr[1];
              }
+             if(arr[0].equals("Settings")) {
+             	String[] set = arr[1].split(";");
+             	System.out.println(set[0]);
+             	settings.setSynchronization(set[0]);
+             	settings.setV(set[1]);
+             	settings.setQvs(Double.valueOf(set[2]));
+             	settings.setQvstep(Integer.valueOf(set[3]));
+             	settings.setSrs(Double.valueOf(set[4]));
+             	settings.setSRstep(Integer.valueOf(set[5]));
+             }
          }
          br1.close();
         while ((strLine = br.readLine()) != null) {
             String[] arr = strLine.split("=");
             
-            if(arr[0].equals("Settings")) {
-            	String[] set = arr[1].split(";");
-            	settings.setSynchronization(set[0]);
-            	settings.setV(set[1]);
-            	settings.setQvs(Double.valueOf(set[2]));
-            	settings.setQvstep(Integer.valueOf(set[3]));
-            	settings.setSrs(Double.valueOf(set[4]));
-            	settings.setSRstep(Integer.valueOf(set[5]));
-            }
+           
             if(settings.getSynchronization().equals("Да") ) {
 	            if(arr[0].equals("FFUZZY")) {
 	            	if(mode.equals("Fuzzy VIKOR")) {
@@ -138,7 +149,7 @@ public class OpenProject {
 	            	}
 	            }
 	            for(int i = 0; i < colnames.size();i++) {
-	            	AddCol(colnames.get(i), pTableData, ptable);
+	            	AddCol(colnames.get(i), pTableData, ptable,i);
 	            }
             }
             
@@ -272,6 +283,7 @@ public class OpenProject {
         br.close();
         Alerts alert = new Alerts();
         alert.successfile();
+        open = true;
 		}
     	catch(Exception ex) {
     		Alerts alert = new Alerts();
@@ -281,12 +293,45 @@ public class OpenProject {
 	
 	public void AddCol(String NAME,
 			ObservableList<OriginalPtableData> pTableData,
-			TableView<OriginalPtableData> ptable) {
+			TableView<OriginalPtableData> ptable, int i2) {
 			TableColumn<OriginalPtableData,String> col = new TableColumn<OriginalPtableData,String>(NAME);
 		
 		//col.setCellValueFactory(new PropertyValueFactory<>(NAME));
 		//col.setText(NAME);
 		col.sortableProperty().set(false);
+		if(i2 != 0) {
+        	col.setCellFactory(column -> {
+    		    return new TableCell<OriginalPtableData, String>() {
+    		        @Override
+    		        protected void updateItem(String item, boolean empty) {
+    		            super.updateItem(item, empty);
+
+    		            if (item == null || empty) {
+    		               // setText(null);
+    		               /// setStyle("");
+    		            } else {
+    		                // Style all dates in March with a different color.
+    		            	 try {
+	    		                	if(mode.equals("Classic VIKOR")) {
+		    		                	Double.valueOf(item);
+		    		                	this.setText(item);
+	    		                	}
+	    		                	else {
+	    		                		TriangularFuzzyNumber tfn  = new TriangularFuzzyNumber(1.0,1.0,1.0);
+		                			tfn.RefreshData(item);
+		                			this.setText(item);
+	    		                	}
+	    		                	//setStyle("");
+	    		                    //setStyle("-fx-background-color: yellow");
+	    		                } catch(Exception ex) {
+	    		                	this.setText(item);
+	    		                	this.setStyle("-fx-background-color: yellow");
+	    		                }
+    		            }
+    		        }
+    		    };
+    		});
+        }
 		col.setOnEditCommit((CellEditEvent<OriginalPtableData, String> event2) -> {
              
        		 TablePosition<OriginalPtableData, String> pos = event2.getTablePosition();
@@ -323,6 +368,39 @@ public class OpenProject {
 		//col.setCellValueFactory(new PropertyValueFactory<>(NAME));
 		//col.setText(NAME);
 		col.sortableProperty().set(false);
+		if(i != 0) {
+			col.setCellFactory(column -> {
+    		    return new TableCell<OriginalPtableData, String>() {
+    		        @Override
+    		        protected void updateItem(String item, boolean empty) {
+    		            super.updateItem(item, empty);
+
+    		            if (item == null || empty) {
+    		               // setText(null);
+    		               /// setStyle("");
+    		            } else {
+    		                // Style all dates in March with a different color.
+    		            	 try {
+	    		                	if(mode.equals("Classic VIKOR")) {
+		    		                	Double.valueOf(item);
+		    		                	this.setText(item);
+	    		                	}
+	    		                	else {
+	    		                		TriangularFuzzyNumber tfn  = new TriangularFuzzyNumber(1.0,1.0,1.0);
+		                			tfn.RefreshData(item);
+		                			this.setText(item);
+	    		                	}
+	    		                	//setStyle("");
+	    		                    //setStyle("-fx-background-color: yellow");
+	    		                } catch(Exception ex) {
+	    		                	this.setText(item);
+	    		                	this.setStyle("-fx-background-color: yellow");
+	    		                }
+    		            }
+    		        }
+    		    };
+    		});
+        }
 		col.setOnEditCommit((CellEditEvent<OriginalPtableData, String> event2) -> {
              
        		 TablePosition<OriginalPtableData, String> pos = event2.getTablePosition();
@@ -353,8 +431,36 @@ public class OpenProject {
 		//col.setCellValueFactory(new PropertyValueFactory<>(NAME));
 		//col.setText(NAME);
 		col.sortableProperty().set(false);
+		 if(i != 0) {
+	        	col.setCellFactory(column -> {
+	    		    return new TableCell<OriginalPtableData, String>() {
+	    		        @Override
+	    		        protected void updateItem(String item, boolean empty) {
+	    		            super.updateItem(item, empty);
+
+	    		            if (item == null || empty) {
+	    		               // setText(null);
+	    		               /// setStyle("");
+	    		            } else {
+	    		                // Style all dates in March with a different color.
+	    		            	 try {
+		    		                	
+		    		                		TriangularFuzzyNumber tfn  = new TriangularFuzzyNumber(1.0,1.0,1.0);
+		    		                		tfn.RefreshData(item);
+		    		                		this.setText(item);
+		    		                	//setStyle("");
+		    		                    //setStyle("-fx-background-color: yellow");
+		    		                } catch(Exception ex) {
+		    		                	this.setText(item);
+		    		                	this.setStyle("-fx-background-color: yellow");
+		    		                }
+	    		            }
+	    		        }
+	    		    };
+	    		});
+	        }
 		col.setOnEditCommit((CellEditEvent<OriginalPtableData, String> event2) -> {
-             
+       
        		 TablePosition<OriginalPtableData, String> pos = event2.getTablePosition();
        		 String newitem = event2.getNewValue();
              int row0 = pos.getRow();

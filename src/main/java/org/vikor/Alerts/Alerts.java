@@ -67,5 +67,23 @@ public class Alerts {
 	 
 	        alert.showAndWait();
 	  }
-	  
+	  public void fatal() {
+		  
+	      Alert alert = new Alert(AlertType.ERROR);
+	      alert.setHeaderText("Глобальная ошибка");
+	      alert.setContentText("Перезапустите приложение");
+	 
+	      // option != null.
+	      Optional<ButtonType> option = alert.showAndWait();
+	 
+	      if (option.get() == null) {
+	        
+	      } else if (option.get() == ButtonType.OK) {
+	         System.exit(0);
+	      } else if (option.get() == ButtonType.CANCEL) {
+	    	  System.exit(0);
+	      } else {
+	        
+	      }
+	   }
 }
