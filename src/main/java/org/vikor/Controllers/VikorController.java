@@ -45,6 +45,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -170,7 +171,10 @@ public class VikorController {
    		  if(Settings.getSynchronization().equals("Да")  ) {
    			  Colnames.clear();
    			if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
-   				
+   					
+   					for(int i = 1; i < Ptable.getColumns().size();i++) {
+   						reTable((TableColumn<OriginalPtableData, String>) Ptable.getColumns().get(i));
+   					}
    					DominationButton.setDisable(true);
    					VPButton.setDisable(true);
    					//QvButton.setDisable(true);
@@ -184,9 +188,9 @@ public class VikorController {
 	   						double left = Double.valueOf(PTableData.get(i).get(j+1))*0.9;
 	   					    left = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
 	   					    double center = Double.valueOf(PTableData.get(i).get(j+1));
-	   					    center = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+	   					    center = new BigDecimal(center).setScale(3, RoundingMode.UP).doubleValue();
 	   					    double right = Double.valueOf(PTableData.get(i).get(j+1))*1.1;
-	   					    right = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+	   					    right = new BigDecimal(right).setScale(3, RoundingMode.UP).doubleValue();
 	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(
 	   								left,
 	   								center,
@@ -199,9 +203,9 @@ public class VikorController {
 	   					double left = Double.valueOf(FTableData.get(i).getWeigh())*0.9;
    					    left = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
    					    double center = Double.valueOf(FTableData.get(i).getWeigh());
-   					    center = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+   					    center = new BigDecimal(center).setScale(3, RoundingMode.UP).doubleValue();
    					    double right = Double.valueOf(FTableData.get(i).getWeigh())*1.1;
-   					    right = new BigDecimal(left).setScale(3, RoundingMode.UP).doubleValue();
+   					    right = new BigDecimal(right).setScale(3, RoundingMode.UP).doubleValue();
    						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(
    								left,
    								center,
@@ -214,7 +218,10 @@ public class VikorController {
 	   				
    				}
 	   			if(ClassicFuzzyBox.getValue().equals("Classic VIKOR") && bx == true) {
-	   				
+
+   					for(int i = 1; i < Ptable.getColumns().size();i++) {
+   						reTable((TableColumn<OriginalPtableData, String>) Ptable.getColumns().get(i));
+   					}
    					DominationButton.setDisable(false);
    					VPButton.setDisable(false);
    					//QvButton.setDisable(false);
@@ -224,7 +231,7 @@ public class VikorController {
 	   				System.out.println("Classic version initialize");
 	   				for(int i = 0; i < PTableData.size();i++) {
 	   					for(int j = 0 ; j < PTableData.get(i).size()-1;j++) {
-	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(0.0,1.0,1.1);
+	   						TriangularFuzzyNumber tfn = new TriangularFuzzyNumber(1.0,1.0,1.1);
 	   						//System.out.println(PTableData+"");
 	   						tfn.RefreshData(PTableData.get(i).get(j+1));
 	   						PTableData.get(i).setinlist(j+1,tfn.getCenter().toString());
@@ -244,7 +251,10 @@ public class VikorController {
 	   			}
    			}
    		  	if(Settings.getSynchronization().equals("Нет")) {
-   				
+
+					for(int i = 1; i < Ptable.getColumns().size();i++) {
+						reTable((TableColumn<OriginalPtableData, String>) Ptable.getColumns().get(i));
+					}
    				if(ClassicFuzzyBox.getValue().equals("Fuzzy VIKOR") && bx == false) {
                     
    					DominationButton.setDisable(true);
@@ -648,5 +658,38 @@ public class VikorController {
         	Ptable.refresh();
         });
         
+   	}
+   	public void reTable(TableColumn<OriginalPtableData, String> tableColumn) {
+   		tableColumn.setCellFactory(column -> {
+		    return new TableCell<OriginalPtableData, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		               // setText(null);
+		               /// setStyle("");
+		            } else {
+		                // Style all dates in March with a different color.
+		            	 try {
+    		                	if(ClassicFuzzyBox.getValue().equals("Classic VIKOR")) {
+	    		                	Double.valueOf(item);
+	    		                	this.setText(item);
+    		                	}
+    		                	else {
+    		                		TriangularFuzzyNumber tfn  = new TriangularFuzzyNumber(1.0,1.0,1.0);
+    		                		tfn.RefreshData(item);
+    		                		this.setText(item);
+    		                	}
+    		                	//setStyle("");
+    		                    //setStyle("-fx-background-color: yellow");
+    		                } catch(Exception ex) {
+    		                	this.setText(item);
+    		                	this.setStyle("-fx-background-color: yellow");
+    		                }
+		            }
+		        }
+		    };
+		});
    	}
 }

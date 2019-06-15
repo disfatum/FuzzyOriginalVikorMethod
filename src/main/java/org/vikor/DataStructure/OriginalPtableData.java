@@ -1,5 +1,7 @@
 package org.vikor.DataStructure;
 
+import org.vikor.Controllers.VikorController;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -30,6 +32,7 @@ public class OriginalPtableData {
 	public void setinlist(int index,String s) {
 		StringProperty e = new SimpleStringProperty();
 		e.set(s);
+		System.out.println(index+" index "+s);
 		this.list.set(index, s);
 	}
 

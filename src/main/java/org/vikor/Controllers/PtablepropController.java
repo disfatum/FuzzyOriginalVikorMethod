@@ -128,9 +128,9 @@ public class PtablepropController {
     	b1.setOnAction(e->{
     		try {
 	    		for(int i = 0 ; i < TfList.size();i++) {
-	    			
-	    			
-	    			System.out.println(VikorController.Settings.getSynchronization()+" sets");
+	    			//System.out.println(TfList.get(i).getText()+" tf");
+	    			//System.out.println(VikorController.PTableData.get(VikorController.pindexPropCol).get(i)+" pdata");
+	    			//System.out.println(VikorController.Settings.getSynchronization()+" sets");
 	    			if(VikorController.Settings.getSynchronization().equals("Да")) {
 	    				if(VikorController.f == true) {
 	    	    			
@@ -144,10 +144,10 @@ public class PtablepropController {
 	    				}
 	    				else {
 	    					VikorController.PTableData.get(VikorController.pindexPropCol).setinlist(i, TfList.get(i).getText());
-	    					
 	    					if(i > 0) {
-			    				 VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i-1, TfList.get(i).getText());
-		    				}
+	    						
+		    				  VikorController.OriginalPTableData.get(VikorController.pindexPropCol).set(i, TfList.get(i).getText());
+	    					}
 	    				}
 		    			
 	    			}

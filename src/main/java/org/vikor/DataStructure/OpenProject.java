@@ -50,7 +50,7 @@ public class OpenProject {
 			BufferedReader br1;
 			
 			br1 = new BufferedReader(new FileReader(name));
-			ObservableList<String> colnames = FXCollections.observableArrayList();
+			
         //String mode = "";
 
          //int counter = 0; int mods = 0;
@@ -88,6 +88,7 @@ public class OpenProject {
 	            	for(int c = 0; c < ftable.length;c++) {
             			System.out.println(ftable[c]+" ftable");
             		}
+	            	ObservableList<String> colnames = FXCollections.observableArrayList();
 	            	for(int i = 0; i < ftable.length ;i++) {
 	            		
 	            		String[] critstruct = ftable[i].split(";");
@@ -98,10 +99,19 @@ public class OpenProject {
 	            		OriginalCriterionDataStructure od = new OriginalCriterionDataStructure(critstruct[0], critstruct[1], critstruct[2], critstruct[3]);
 		            		fTableData.add(od);
 		            	}
+	            	TableColumn<OriginalPtableData,String> col1 = new TableColumn<OriginalPtableData,String>("Альтернатива/Критерий");
+ 	           		
+            		VikorController.FuzzyPTableDataColumns.add(col1);
+	            	for(int i = 0; i < colnames.size();i++) {
+	            		TableColumn<OriginalPtableData,String> col = new TableColumn<OriginalPtableData,String>(colnames.get(i));
+	            		VikorController.FuzzyPTableDataColumns.add(col);
+	            	}
 		            }
 	            }
 	            if(arr[0].equals("FCLASSIC")) {
+	            	ObservableList<String> colnames = FXCollections.observableArrayList();
 	            	if(mode.equals("Classic VIKOR")) {
+	            		
 	            		String[] ftable = arr[1].split("-");
 		            	
 		            	for(int i = 0; i < ftable.length ;i++) {
@@ -112,6 +122,14 @@ public class OpenProject {
 			            		fTableData.add(od);
 			            	}
 			            }
+	            	TableColumn<OriginalPtableData,String> col1 = new TableColumn<OriginalPtableData,String>("Альтернатива/Критерий");
+	 	           		
+	            	VikorController.OriginalPTableDataColumns.add(col1);
+            		System.out.println(colnames);
+	            	for(int i = 0; i < colnames.size();i++) {
+	            		TableColumn<OriginalPtableData,String> col = new TableColumn<OriginalPtableData,String>(colnames.get(i));
+	            		VikorController.OriginalPTableDataColumns.add(col);
+	            	}  
 	            	
 	            }
 	            if(arr[0].equals("PFUZZY")) {
@@ -144,13 +162,12 @@ public class OpenProject {
 		            		}
 		            		OriginalPtableData pd = new OriginalPtableData(l);
 		            		pTableData.add(pd);
+ 		            		VikorController.OriginalPTableData.add(l);
 		            		//AddCol(colnames.get(i), pTableData, ptable);
 		            	}
 	            	}
 	            }
-	            for(int i = 0; i < colnames.size();i++) {
-	            	AddCol(colnames.get(i), pTableData, ptable,i);
-	            }
+	            
             }
             
             else if(settings.getSynchronization().equals("Нет")) {///////ДОДЕЛАТЬ!!!!!!!!!1
@@ -179,6 +196,7 @@ public class OpenProject {
  		            
  	            }
  	            if(arr[0].equals("FCLASSIC")) {
+ 	            	ObservableList<String> colnames = FXCollections.observableArrayList();
  	            		String[] ftable = arr[1].split("-");
  	            		List<String> cols = FXCollections.observableArrayList();
  		            	for(int i = 0; i < ftable.length ;i++) {
@@ -196,6 +214,7 @@ public class OpenProject {
  		            	TableColumn<OriginalPtableData,String> col1 = new TableColumn<OriginalPtableData,String>("Альтернатива/Критерий");
  	 	           		
 	            		VikorController.OriginalPTableDataColumns.add(col1);
+	            		System.out.println(cols.size()+" cols");
  	            	for(int i = 0; i < cols.size();i++) {
  	            		TableColumn<OriginalPtableData,String> col = new TableColumn<OriginalPtableData,String>(cols.get(i));
  	            		VikorController.OriginalPTableDataColumns.add(col);
@@ -263,19 +282,29 @@ public class OpenProject {
             }
 	            
         }
-        if(mode.equals("Fuzzy VIKOR")) {
-        	ptable.getColumns().addAll(VikorController.FuzzyPTableDataColumns);
-        }
-        if(mode.equals("Classic VIKOR")) {
-        	 ptable.getColumns().addAll(VikorController.OriginalPTableDataColumns);
-        }
+        ptable.getColumns().clear();
+       // AddfCol(null, pTableData, ptable,0);
+		/*System.out.println(colnames.size()+" size");
+        for(int i = 0; i < colnames.size();i++) {
+        	System.out.println(colnames.get(i).toString()+" size "+i);
+        	AddCol(colnames.get(i), pTableData, ptable,i+1);
+        }*/
+        
         for(int i = 0; i < VikorController.FuzzyPTableDataColumns.size();i++) {
+        //	System.out.println(colnames.get(i).toString()+" size "+i);
        	   AddColfuzy(VikorController.FuzzyPTableDataColumns.get(i), pTableData, ptable,i);
        	}
          for(int i = 0; i < VikorController.OriginalPTableDataColumns.size();i++) {
         	 origAddCol(VikorController.OriginalPTableDataColumns.get(i), pTableData, ptable, i);
           }
-        
+         System.out.println(mode+" size");
+         if(mode.equals("Fuzzy VIKOR")) {
+         	ptable.getColumns().addAll(VikorController.FuzzyPTableDataColumns);
+         }
+         if(mode.equals("Classic VIKOR")) {
+        	 System.out.println(VikorController.OriginalPTableDataColumns.size()+" size");
+         	ptable.getColumns().addAll(VikorController.OriginalPTableDataColumns);
+         }
         
         
         ptable.refresh();
@@ -288,6 +317,7 @@ public class OpenProject {
     	catch(Exception ex) {
     		Alerts alert = new Alerts();
 			alert .Erroropen();
+    		//ex.printStackTrace();
     	}
     }
 	
@@ -299,6 +329,7 @@ public class OpenProject {
 		//col.setCellValueFactory(new PropertyValueFactory<>(NAME));
 		//col.setText(NAME);
 		col.sortableProperty().set(false);
+		
 		if(i2 != 0) {
         	col.setCellFactory(column -> {
     		    return new TableCell<OriginalPtableData, String>() {
@@ -341,7 +372,9 @@ public class OpenProject {
             // VikorController.OriginalPTableData.get(row0).set(col0, newitem);
              pTableData.get(row0).setinlist(col0, newitem);
             });
+		
 		for(int i = 0; i < ptable.getColumns().size()+1;i++) {
+		
 			final int q = i;
 			col.setCellValueFactory(new Callback<CellDataFeatures<OriginalPtableData, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<OriginalPtableData, String> p) {
@@ -351,7 +384,7 @@ public class OpenProject {
 		     }
 		  });	
 		}
-		ptable.getColumns().add(col);
+			ptable.getColumns().add(col);
 	}
 	
 	public TableColumn<OriginalPtableData, String> fuzzyAddCol(String NAME,
@@ -387,8 +420,8 @@ public class OpenProject {
 	    		                	}
 	    		                	else {
 	    		                		TriangularFuzzyNumber tfn  = new TriangularFuzzyNumber(1.0,1.0,1.0);
-		                			tfn.RefreshData(item);
-		                			this.setText(item);
+	    		                		tfn.RefreshData(item);
+	    		                		this.setText(item);
 	    		                	}
 	    		                	//setStyle("");
 	    		                    //setStyle("-fx-background-color: yellow");
@@ -410,7 +443,7 @@ public class OpenProject {
              pTableData.get(row0).setinlist(col0, newitem);
              VikorController.OriginalPTableData.get(row0).set(col0, newitem);
             });
-		for(int j = 0; j < VikorController.OriginalPTableData.size();j++) {
+		
 			final int z = i;
 			col.setCellValueFactory(new Callback<CellDataFeatures<OriginalPtableData, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<OriginalPtableData, String> p) {
@@ -419,7 +452,7 @@ public class OpenProject {
 		    	 
 		     }
 		  });	
-		}
+		
 	}
 	public static void AddColfuzy(TableColumn<OriginalPtableData,String> col,
 			ObservableList<OriginalPtableData> pTableData,
@@ -472,16 +505,38 @@ public class OpenProject {
            
             });
 		
-		for(int j = 0; j < ptable.getColumns().size();j++) {
 			final int q = i;
 			col.setCellValueFactory(new Callback<CellDataFeatures<OriginalPtableData, String>, ObservableValue<String>>() {
 		     public ObservableValue<String> call(CellDataFeatures<OriginalPtableData, String> p) {
 		    	 
-
-		    	 return new ReadOnlyObjectWrapper<String>(p.getValue().get(q));
-		    	 
+		    	 return new ReadOnlyObjectWrapper<String>(p.getValue().get(q));	 
 		     }
 		  });	
-		}
 	}
+	public void AddfCol(String NAME,
+			ObservableList<OriginalPtableData> pTableData,
+			TableView<OriginalPtableData> ptable, int i2) {
+		TableColumn<OriginalPtableData,String> AltNameCol = new TableColumn<OriginalPtableData,String>("Альтернатива/Критерий");
+   		AltNameCol.sortableProperty().set(false);
+   		AltNameCol.setOnEditCommit((CellEditEvent<OriginalPtableData, String> event2) -> {
+            
+      		 TablePosition<OriginalPtableData, String> pos = event2.getTablePosition();
+      		String newitem = event2.getNewValue();
+            int row0 = pos.getRow();
+            int col0  = pos.getColumn();
+            pTableData.get(row0).setinlist(col0, newitem);
+          
+           });
+   		for(int i = 0; i < 1;i++) {
+   			final int q = i;
+   		AltNameCol.setCellValueFactory(new Callback<CellDataFeatures<OriginalPtableData, String>, ObservableValue<String>>() {
+		     public ObservableValue<String> call(CellDataFeatures<OriginalPtableData, String> p) {
+				
+		    	 return new ReadOnlyObjectWrapper<String>(p.getValue().getFromList(q));
+		     }
+		  });
+   		}
+   		ptable.getColumns().add(AltNameCol);
+	}
+
 }

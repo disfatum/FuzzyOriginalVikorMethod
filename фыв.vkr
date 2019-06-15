@@ -1,0 +1,12 @@
+MODE=Classic VIKOR
+
+Settings=Да;0.5;0.01;10;0.01;10;
+
+FFUZZY=
+
+FCLASSIC=
+
+PFUZZY=
+
+PCLASSIC=
+
